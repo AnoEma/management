@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+
+<div class="chart-container">
+    <canvas id="trafficChart"></canvas>
+</div>
+
+@* <div class="metrics-container">
+    <div class="metric-item">
+        <p>Visits</p>
+        <h3>29,703 Users (40%)</h3>
+    </div>
+    <div class="metric-item">
+        <p>Unique</p>
+        <h3>24,093 Users (20%)</h3>
+    </div>
+    <div class="metric-item">
+        <p>Pageviews</p>
+        <h3>78,706 Views (60%)</h3>
+    </div>
+    <div class="metric-item">
+        <p>New Users</p>
+        <h3>22,123 Users (80%)</h3>
+    </div>
+    <div class="metric-item">
+        <p>Bounce Rate</p>
+        <h3>40.15%</h3>
+    </div>
+</div> *@
+
+@code {
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await  LoadTrafficChart();
+        }
+    }
+
+    private async Task LoadTrafficChart()
+    {
+        await JS.InvokeVoidAsync("LoadTrafficChart");
+    }
+}
+

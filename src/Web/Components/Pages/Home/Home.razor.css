@@ -1,0 +1,15 @@
+﻿.lead-details {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.personal-info, .vehicle-info {
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #6a1b9a;
+}

@@ -1,0 +1,163 @@
+﻿.metrics-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.metric-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .metric-card.purple {
+        background-color: #6a1b9a;
+    }
+
+    .metric-card.blue {
+        background-color: #1976d2;
+    }
+
+    .metric-card.yellow {
+        background-color: #fbc02d;
+    }
+
+    .metric-card.red {
+        background-color: #d32f2f;
+    }
+
+.metric-content h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.metric-content p {
+    margin: 5px 0;
+}
+
+.metric-content small {
+    font-size: 12px;
+}
+
+.chart-container {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #333;
+    color: #fff;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.chart-toggle button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+    .chart-toggle button.active {
+        font-weight: bold;
+        border-bottom: 2px solid #fff;
+    }
+
+.stats-container {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #444;
+    color: #fff;
+}
+
+    .stat-card h4 {
+        margin: 0 0 5px;
+        font-size: 16px;
+    }
+
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.chart-card {
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-card {
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+    .leaderboard-item img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+}
+
+.progress {
+    height: 100%;
+}
+
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.card-header {
+    font-weight: bold;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}

@@ -1,0 +1,99 @@
+﻿@page "/dashboard"
+
+<!DOCTYPE html>
+<head>
+    <script src="~/js/Dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<h1 class="text-center mb-4">Dashboard</h1>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">26K Pendente</h5>
+                    <p class="card-text">-12.4% ↓</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">$6,200 Vendido</h5>
+                    <p class="card-text">40.9% ↑</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">2.49% Emitido</h5>
+                    <p class="card-text">84.7% ↑</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">44K Cancelado</h5>
+                    <p class="card-text">-23.6% ↓</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Grafico linear</div>
+                <div class="card-body">
+                    <LinearGraphComponents />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">Completion Tasks</div>
+                <div class="card-body">
+                    <canvas id="completionTasksChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">Tasks Performance</div>
+                <div class="card-body">
+                    <canvas id="tasksPerformanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Produdividade dos Usuarios</div>
+                <div class="card-body">
+                    <LeaderboardComponents />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            LoadCharts();
+        }
+    }
+
+    private void LoadCharts()
+    {
+        // Lógica para carregar os gráficos usando JavaScript.
+    }
+}

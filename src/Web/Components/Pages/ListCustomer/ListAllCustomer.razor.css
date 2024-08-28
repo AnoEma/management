@@ -2,31 +2,66 @@
     text-align: center;
 }
 
-    h1.title {
+h1.title {
         font-size: 2.5em;
         color: #007bff;
         text-align: center;
         margin-bottom: 20px;
-    }
+}
+p {
+    font-size: 1.5em;
+    color: #083610;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: monospace;
+}
 
-.list-group-custom {
-    max-width: 50%;
-    margin: auto;
+.list-group {
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 .list-group-item-custom {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
     padding: 15px;
-    font-size: 1.2em;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #333;
 }
 
 .item-content {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
-    .item-content .btn-custom {
-        margin-left: 75%;
-    }
+.status-button {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    min-width: 80px;
+    color: #fff;
+    border: none;
+}
+
+.status-pendente {
+    background-color: #ffb400;
+}
+
+.status-nao-vendido {
+    background-color: #ff5252;
+}
+
+.status-outro {
+    background-color: #9e9e9e;
+}
+
+

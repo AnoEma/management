@@ -1,18 +1,28 @@
-﻿@page "/lista-leads"
+﻿@page "/"
 <h1>Listas dos leads</h1>
 
 <div class="list-group">
+    <div class="list-group-item list-group-item-action list-group-item-custom">
+        <div class="item-content">
+            <p>Nome</p>
+            <p>Placa</p>
+            <p>Status</p>
+        </div>
+    </div>
     @foreach (var lead in Leads)
     {
         var buttonClass = lead.Status == "pendent"
-        ? "btn-warning"
+        ? "status-pendente"
         : lead.Status == "não vendido"
-        ? "btn-danger"
-        : "btn-secondary";
+        ? "status-nao-vendido"
+        : "status-outro";
+
         <a href="#" class="list-group-item list-group-item-action list-group-item-custom">
             <div class="item-content">
+                <span class="bi bg-info"></span>
                 <span>@lead.Text</span>
-                <button class="btn @buttonClass btn-custom">Status</button>
+                <span>@lead.Placa</span>
+                <button class="status-button @buttonClass">@lead.Status</button>
             </div>
         </a>
     }
@@ -29,6 +39,7 @@
     class LeadTest
     {
         public string Text { get; set; }
+        public string Placa { get; set; }
         public string Status { get; set; }
 
         public List<LeadTest> GetLeadTests()
@@ -38,22 +49,26 @@
                 new LeadTest
                 {
                     Text = "The current link item",
-                    Status = "pendent"
+                    Status = "pendent",
+                    Placa = "XXX-XXX"
                 },
                 new LeadTest
                 {
                     Text = "The current link item",
-                    Status = "pendent"
+                    Status = "pendent",
+                    Placa = "XXX-CCC"
                 },
                 new LeadTest
                 {
                     Text = "The current link item",
-                    Status = "não vendido"
+                    Status = "não vendido",
+                    Placa = "XXX-VVV"
                 },
                 new LeadTest
                 {
                     Text = "The current link item",
-                    Status = "outro"
+                    Status = "Emitido",
+                    Placa = "XXX-PPP"
                 }
             };
         }

@@ -1,0 +1,77 @@
+﻿@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<div class="container">
+    <canvas id="leaderboardChart"></canvas>
+</div>
+
+@code{
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadTrafficChart();
+        }
+    }
+
+    private async Task LoadTrafficChart()
+    {
+        await JS.InvokeVoidAsync("createLeaderboardChart");
+    }
+}
+
+
+<script>
+    function createLeaderboardChart() {
+        const ctx = document.getElementById('leaderboardChart').getContext('2d');
+        const userIcons = [
+            '👤',
+            '👥',
+            '🧑',
+            '👩‍💻',
+            '🧔',
+        ];
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: userIcons.map((icon, index) => `${icon} User ${index + 1}`),
+                datasets: [
+                    {
+                        label: 'Vendido',
+                        data: [50, 60, 70, 40, 90],
+                        backgroundColor: '#6A1B9A',
+                    },
+                    {
+                        label: 'Pendente',
+                        data: [30, 20, 15, 25, 10],
+                        backgroundColor: '#43A047',
+                    },
+                    {
+                        label: 'Não vendido',
+                        data: [20, 20, 15, 35, 20],
+                        backgroundColor: '#E53935',
+                    },
+                ],
+            },
+            options: {
+                indexAxis: 'y', 
+                responsive: true,
+                scales: {
+                    x: {
+                        stacked: true,
+                    },
+                    y: {
+                        stacked: true,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                },
+            },
+        });
+    }
+    window.onload = createLeaderboardChart;
+</script>
