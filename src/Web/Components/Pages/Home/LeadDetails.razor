@@ -1,0 +1,77 @@
+﻿@page "/lead-details/{LeadId:int}"
+
+<div class="lead-details">
+    <h2>Detalhes do Lead</h2>
+
+    @if (LeadDetail != null)
+    {
+        <div class="lead-card">
+            <div class="lead-info">
+                <img src="" alt="@LeadDetail.Name" class="profile-image" />
+                <div class="personal-info">
+                    <h3>@LeadDetail.Name</h3>
+                    <p><strong>Email:</strong> @LeadDetail.Email</p>
+                    <p><strong>Telefone:</strong> @LeadDetail.Phone</p>
+                    <p><strong>Data de Nascimento:</strong> @LeadDetail.BirthDate.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="vehicle-info">
+            <h3>Informações do Veículo</h3>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+        </div>
+        <div class="comment-info">
+            <h3>Comentario</h3>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+        </div>
+    }
+    else
+    {
+        <p>Carregando detalhes do lead...</p>
+    }
+</div>
+
+@code {
+    [Parameter] public int LeadId { get; set; }
+    private Lead LeadDetail { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        LeadDetail = await GetLeadByIdAsync(LeadId);
+    }
+
+    public class Lead
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public DateTime BirthDate { get; set; }
+        public Vehicle Vehicle { get; set; } = new();
+    }
+
+    public class Vehicle
+    {
+        public string Model { get; set; }
+        public string Plate { get; set; }
+        public int Year { get; set; }
+    }
+
+    private Task<Lead> GetLeadByIdAsync(int id)
+    {
+        List<Lead> Leads = new(){
+        new Lead { Id = 1, Name = "John Doe", Email = "john@example.com", Phone = "(11) 98765-4321", BirthDate = new(1998,08,21), Vehicle = new Vehicle { Model = "Honda Civic", Plate = "ABC-1234", Year = 2020 } },
+        new Lead { Id = 2, Name = "Jane Smith", Email = "jane@example.com", Phone = "(21) 98765-1234", BirthDate = new(1998,08,21), Vehicle = new Vehicle { Model = "Toyota Corolla", Plate = "XYZ-5678", Year = 2019 } }
+        };
+
+        return Task.FromResult(Leads.FirstOrDefault(lead => lead.Id == id));
+    }
+}
