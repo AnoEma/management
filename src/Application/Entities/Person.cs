@@ -7,5 +7,6 @@ string LastName,
 string Email,
 string PhoneNumber,
 string DocumentCPF,
-DateTime BirthDay
+DateTime BirthDay,
+char Gender
 );

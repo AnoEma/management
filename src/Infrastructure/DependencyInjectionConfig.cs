@@ -7,6 +7,5 @@ public static class DependencyInjectionConfig
 {
     public static void AddInfrastructureService(this IServiceCollection services, IConfiguration configuration)
     {
-
     }
 }

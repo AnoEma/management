@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Application.UseCases.Customers.GetCustomers;
 
-namespace Application.UseCases.Customers.GetCustomers
+internal class GetCustomersQuery
 {
-    internal class GetCustomersQuery
-    {
-    }
 }
