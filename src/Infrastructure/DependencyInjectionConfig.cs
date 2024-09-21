@@ -1,6 +1,7 @@
 ﻿using Infrastructure.DataConfiguration;
 using Infrastructure.Repository.Customers;
 using Infrastructure.Repository.Users;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +13,7 @@ public static class DependencyInjectionConfig
     {
         services.AddDbContext<InfrastructureDbContext>(options =>
         {
-            
+            options.UseSqlServer(configuration.GetConnectionString("management-database"));
         });
         services.AddSingleton<InfrastructureDbContext>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
