@@ -1,4 +1,7 @@
-﻿namespace Api.Configuration;
+﻿using Application;
+using Infrastructure;
+
+namespace Api.Configuration;
 
 public static class DependencyInjectionConfiguration
 {
@@ -6,7 +9,7 @@ public static class DependencyInjectionConfiguration
     {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHealthChecks();
-
-
+        builder.Services.AddInfrastructureService(builder.Configuration);
+        builder.Services.AddAplicationService();
     }
 }

@@ -4,5 +4,5 @@ namespace Application.UseCases.Users;
 
 public record UserDto(
 int Id,
-Person Person,
+Person Person
 );
