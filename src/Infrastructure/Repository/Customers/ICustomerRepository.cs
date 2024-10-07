@@ -1,4 +1,3 @@
 ﻿namespace Infrastructure.Repository.Customers;
 
-public interface ICustomerRepository : IBaseRepository<CustomerCommand>
-{}
+public interface ICustomerRepository : IBaseRepository<CustomerCommand>{}

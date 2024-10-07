@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.UseCases.SolicitationLead;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
@@ -9,5 +10,6 @@ public static class DependencyInjectionConfig
         //Query Handlers
 
         //Command Handlers
+        services.AddScoped<ICreateSolicitationLeadCommandHandler, CreateSolicitationLeadCommandHandler>();
     }
 }

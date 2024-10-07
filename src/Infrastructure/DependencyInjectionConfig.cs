@@ -1,6 +1,6 @@
 ﻿using Infrastructure.DataConfiguration;
-using Infrastructure.Repository.Customers;
-using Infrastructure.Repository.Users;
+using Infrastructure.HttpClients.Quotations;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +15,9 @@ public static class DependencyInjectionConfig
         {
             options.UseSqlServer(configuration.GetConnectionString("management-database"));
         });
-        services.AddSingleton<InfrastructureDbContext>();
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+        services.AddQuotationApiHttpClients(configuration);
     }
 }
