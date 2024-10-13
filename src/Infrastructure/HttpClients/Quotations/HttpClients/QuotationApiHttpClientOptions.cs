@@ -1,8 +1,11 @@
-﻿namespace Infrastructure.HttpClients.Quotations.HttpClients;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Infrastructure.HttpClients.Quotations.HttpClients;
 
 public sealed record QuotationApiHttpClientOptions : ApiHttpClientOptions
 {
-    public string ApiKey { get; init; } = string.Empty;
+    [Required, Url]
+    public string BaseUrl { get; init; } = string.Empty;
     public string SoapAction { get; init; } = string.Empty;
 
 }

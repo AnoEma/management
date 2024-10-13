@@ -1,4 +1,4 @@
-﻿using Infrastructure.HttpClients.Quotations.HttpClients;
+﻿using Infrastructure.HttpClients.Persons.HttpClients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -6,25 +6,26 @@ using Polly;
 using Polly.Contrib.WaitAndRetry;
 using Polly.Extensions.Http;
 
-namespace Infrastructure.HttpClients.Quotations;
+namespace Infrastructure.HttpClients.Persons;
 
 public static class DependencyInjectionConfig
 {
-    public static void AddQuotationApiHttpClients(this IServiceCollection services, IConfiguration configuration)
+    public static void AddPersonApiHttpClients(this IServiceCollection services, IConfiguration configuration)
     {
         AddOptions(services, configuration);
 
 
         services
-           .AddHttpClient<IQuotationApiHttpClient, QuotationApiHttpClient>((serviceProvider, client) =>
+           .AddHttpClient<IPersonApiHttpClient, PersonApiHttpClient>((serviceProvider, client) =>
            {
-               QuotationApiHttpClientOptions options = serviceProvider
-                   .GetRequiredService<IOptions<QuotationApiHttpClientOptions>>().Value;
+               PersonApiHttpClientOptions options = serviceProvider
+                   .GetRequiredService<IOptions<PersonApiHttpClientOptions>>().Value;
 
                if (!string.IsNullOrEmpty(options.UserAgent))
                {
-                   client.DefaultRequestHeaders.Add("SOAPAction", options.SoapAction);
                    client.DefaultRequestHeaders.Add("X-API-KEY", options.ApiKey);
+                   client.DefaultRequestHeaders.Add("Accept", "*/*");
+                   client.DefaultRequestHeaders.Add("Accept-Encoding", "*");
                }
 
                client.BaseAddress = new Uri(options.BaseUrl);
@@ -35,15 +36,15 @@ public static class DependencyInjectionConfig
     private static void AddOptions(IServiceCollection services, IConfiguration configuration)
     {
         services
-           .AddOptions<QuotationApiHttpClientOptions>()
-           .Bind(configuration.GetSection(nameof(QuotationApiHttpClientOptions)));
+           .AddOptions<PersonApiHttpClientOptions>()
+           .Bind(configuration.GetSection(nameof(PersonApiHttpClientOptions)));
     }
 
     private static AsyncPolicy<HttpResponseMessage> GetRetryPolicy(IConfiguration configuration)
     {
-        QuotationApiHttpClientOptions? retryOptions = configuration
-            .GetSection(nameof(QuotationApiHttpClientOptions))
-            .Get<QuotationApiHttpClientOptions>();
+        PersonApiHttpClientOptions? retryOptions = configuration
+            .GetSection(nameof(PersonApiHttpClientOptions))
+            .Get<PersonApiHttpClientOptions>();
 
         IEnumerable<TimeSpan> delay = Backoff
             .DecorrelatedJitterBackoffV2(medianFirstRetryDelay: retryOptions?.FirstRetryDelay ?? TimeSpan.Zero, retryCount: retryOptions?.RetryCount ?? 0);

@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.HttpClients.Quotations.HttpClients;
 
-public record QuotationCommand
+public record QuotationRequest
 (
 int TIPOSEG,
 Segurado SEGURADO,
@@ -61,8 +61,7 @@ string CEPCIRC,
 string CEPRESID,
 string GARAGRESID,
 string GARAGTRAB,
-int LOCALPERNOITE,
-DadosVeiculo Dadosveiculo
+int LOCALPERNOITE
 );
 
 public record PerfilUsoVeic

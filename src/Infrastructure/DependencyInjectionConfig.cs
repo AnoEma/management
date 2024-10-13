@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataConfiguration;
+using Infrastructure.HttpClients.Persons;
 using Infrastructure.HttpClients.Quotations;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -19,5 +20,6 @@ public static class DependencyInjectionConfig
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
         services.AddQuotationApiHttpClients(configuration);
+        services.AddPersonApiHttpClients(configuration);
     }
 }

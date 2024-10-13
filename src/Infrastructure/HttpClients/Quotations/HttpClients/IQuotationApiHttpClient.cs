@@ -4,5 +4,5 @@ namespace Infrastructure.HttpClients.Quotations.HttpClients;
 
 public interface IQuotationApiHttpClient
 {
-    Task<Result> CreatQuotationAsync(QuotationCommand command, CancellationToken cancellationToken = default);
+    Task<Result> CreatQuotationAsync(QuotationRequest command, CancellationToken cancellationToken = default);
 }
