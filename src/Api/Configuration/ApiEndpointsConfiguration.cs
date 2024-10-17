@@ -7,5 +7,6 @@ public static class ApiEndpointsConfiguration
     public static void RegisterEndpoints(this IEndpointRouteBuilder app)
     {
         app.AddSolicitationRoutes();
+        app.AddPersonRoutes();
     }
 }

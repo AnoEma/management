@@ -25,8 +25,8 @@ public class GetPersonQueryHandler(IPersonApiHttpClient personApiHttpClient) : I
     {
         return new(
             CpfCnpj: query.Cpf,
-            EstruturaVendas: "",
-            Source: "",
+            EstruturaVendas: "1",
+            Source: "TELEPORT",
             TipoPessoa: GetTipoPessoa(query)
         );
     }

@@ -15,10 +15,11 @@ public static class ResultExtensions
     public static Microsoft.AspNetCore.Http.IResult ToActionResult<T>(this Result<T> result)
     {
         if (result.IsSuccess)
-            return Results.Ok(result);
+            return Results.Ok(result.Value);
 
         return MapFailureToHttpResponse(result.Error);
     }
+
 
     private static Microsoft.AspNetCore.Http.IResult MapFailureToHttpResponse(string error)
     {

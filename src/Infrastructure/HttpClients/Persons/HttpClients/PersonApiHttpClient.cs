@@ -11,7 +11,7 @@ public class PersonApiHttpClient(HttpClient httpClient) : IPersonApiHttpClient
         {
             var query = $"?cpf_cnpj={request.CpfCnpj}&estrutura_vendas={request.EstruturaVendas}&source={request.Source}&tipo_pessoa={request.TipoPessoa}";
 
-            using HttpResponseMessage httpResponse = await httpClient.GetAsync($"/person/v1/search{query}", cancellationToken);
+            using HttpResponseMessage httpResponse = await httpClient.GetAsync($"/gateway/route/gateway/person/v1/search{query}", cancellationToken);
 
             httpResponse.EnsureSuccessStatusCode();
 
