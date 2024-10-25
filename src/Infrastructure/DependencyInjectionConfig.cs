@@ -1,6 +1,7 @@
 ﻿using Infrastructure.DataConfiguration;
 using Infrastructure.HttpClients.Persons;
 using Infrastructure.HttpClients.Quotations;
+using Infrastructure.HttpClients.Vehicles;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,5 +22,6 @@ public static class DependencyInjectionConfig
 
         services.AddQuotationApiHttpClients(configuration);
         services.AddPersonApiHttpClients(configuration);
+        services.AddVehicleApiHttpClients(configuration);
     }
 }

@@ -8,5 +8,6 @@ public static class ApiEndpointsConfiguration
     {
         app.AddSolicitationRoutes();
         app.AddPersonRoutes();
+        app.AddVehicleRoutes();
     }
 }
