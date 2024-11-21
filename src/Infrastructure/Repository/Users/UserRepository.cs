@@ -1,9 +1,5 @@
-﻿using Infrastructure.DataConfiguration;
-using Microsoft.EntityFrameworkCore;
+﻿namespace Infrastructure.Repository.Users;
 
-namespace Infrastructure.Repository.Users;
-
-public class UserRepository : BaseRepository<UserCommand>, IUserRepository
+public class UserRepository : IUserRepository
 {
-    public UserRepository(InfrastructureDbContext context, DbSet<UserCommand> dbSet) : base(context, dbSet){}
 }

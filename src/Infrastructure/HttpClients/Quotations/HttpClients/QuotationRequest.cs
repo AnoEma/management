@@ -2,6 +2,12 @@
 
 public record QuotationRequest
 (
+Cotacao COTACAO
+);
+
+
+public record Cotacao
+(
 int TIPOSEG,
 Segurado SEGURADO,
 Proprietario PROPRIETARIO,

@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Infrastructure.Extensions;
+using System.Text;
 
 namespace Infrastructure.HttpClients.Quotations.HttpClients;
 
@@ -9,9 +10,9 @@ public class QuotationApiHttpClient(HttpClient httpClient) : IQuotationApiHttpCl
     {
         try
         {
-            string commandRequest = BuildCommand(command.Serialize());
+            string commandRequest = command.Serialize();
 
-            StringContent content = commandRequest.SerializeRequest("application/xml");
+            StringContent content = new(BuildCommand(commandRequest), Encoding.UTF8);
             using HttpResponseMessage httpResponse = await httpClient.PostAsync("/soap/Teleport", content, cancellationToken);
 
             httpResponse.EnsureSuccessStatusCode();

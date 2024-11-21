@@ -1,4 +1,4 @@
-﻿using Application.UseCases.SolicitationLead;
+﻿using Application.UseCases.SolicitationLeads;
 
 namespace Api.Models.Request;
 
@@ -34,9 +34,9 @@ internal static class QuotationRequestToCommandAdapter
     private static VehicleDetails GetVehicleDetails(DadosVeiculo? dadosveiculo)
     {
         return new VehicleDetails(
-            Brand: dadosveiculo?.marcaVeiculo,
-            ModelYear: dadosveiculo?.anoModelo,
-            Model: dadosveiculo?.modeloVeiculo
+            Brand: dadosveiculo?.MarcaVeiculo,
+            ModelYear: dadosveiculo?.AnoModelo,
+            Model: dadosveiculo?.ModeloVeiculo
         );
     }
 

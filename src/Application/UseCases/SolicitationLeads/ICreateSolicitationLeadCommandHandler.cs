@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 
-namespace Application.UseCases.SolicitationLead;
+namespace Application.UseCases.SolicitationLeads;
 
 public interface ICreateSolicitationLeadCommandHandler
 {

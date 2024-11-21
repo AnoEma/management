@@ -6,7 +6,8 @@ int TIPOSEG,
 Segurado SEGURADO,
 Proprietario PROPRIETARIO,
 CondutorP CONDUTORP,
-Veiculo VEICULO
+Veiculo VEICULO,
+DadosVeiculo DadosVeiculo
 );
 
 internal record Segurado
@@ -72,7 +73,7 @@ int USO
 
 internal record DadosVeiculo
 (
-string marcaVeiculo,
-string anoModelo,
-string modeloVeiculo
+string MarcaVeiculo,
+string AnoModelo,
+string ModeloVeiculo
 );

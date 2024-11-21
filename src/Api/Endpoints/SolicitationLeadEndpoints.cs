@@ -1,6 +1,7 @@
 ﻿using Api.Extentions;
 using Api.Models.Request;
-using Application.UseCases.SolicitationLead;
+using Application.UseCases.SolicitationLeads;
+using Application.UseCases.SolicitationLeads.Querys;
 using Microsoft.AspNetCore.Mvc;
 using Monad = CSharpFunctionalExtensions;
 
@@ -10,16 +11,21 @@ public static class SolicitationLeadEndpoints
 {
     public static void AddSolicitationRoutes(this IEndpointRouteBuilder app)
     {
-        RouteGroupBuilder customerApi = app
+        RouteGroupBuilder solicitationApi = app
             .MapGroup("/solicitation")
             .WithSummary("Handel customer api")
             .WithTags("solicitation");
 
-        customerApi
+        solicitationApi
             .MapPost("/", CreateLead)
             .WithName(nameof(CreateLead))
-            .Produces<string>(StatusCodes.Status200OK);
+            .Produces<string>(StatusCodes.Status201Created);
 
+        solicitationApi
+            .MapGet("/", GetAllLead)
+            .WithName(nameof(GetAllLead))
+            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> CreateLead(
@@ -31,5 +37,13 @@ public static class SolicitationLeadEndpoints
         Monad.Result result = await commandHandler.HandleAsync(solicitationLead, cancellationToken);
 
         return result.IsSuccess ? Results.Created() : result.ToActionResult();
+    }
+
+    private static async Task<IResult> GetAllLead(
+        [FromServices] ISolicitationLeadQueryHandler queryHandler,
+        CancellationToken cancellationToken)
+    {
+        Monad.Result result = await queryHandler.Handler(cancellationToken);
+        return result.ToActionResult();
     }
 }

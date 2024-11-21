@@ -15,10 +15,10 @@ public static class DependencyInjectionConfig
     {
         services.AddDbContext<InfrastructureDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("management-database"));
+            options.UseSqlServer(configuration.GetConnectionString("ManagementDataBase"));
         });
 
-        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddRepositoty();
 
         services.AddQuotationApiHttpClients(configuration);
         services.AddPersonApiHttpClients(configuration);

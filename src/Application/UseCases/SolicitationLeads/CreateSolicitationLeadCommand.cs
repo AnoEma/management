@@ -1,4 +1,4 @@
-﻿namespace Application.UseCases.SolicitationLead;
+﻿namespace Application.UseCases.SolicitationLeads;
 
 public record CreateSolicitationLeadCommand
 (
