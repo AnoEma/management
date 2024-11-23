@@ -6,6 +6,7 @@ public record OpportuniteLead
     public OpportuniteStatus Status { get; set; }
     public OpportuniteType Type { get; set; }
     public DateTime CreateAt { get; set; }
+    public DateTime StartLead { get; set; }
     public int InsuredId { get; set; }
     public DateTime? SaleDate { get; set; } = null;
     public DateTime? IssueDate { get; set; } = null;
@@ -28,5 +29,11 @@ public record OpportuniteLead
     {
         CanceledDate = DateTime.Now;
         Status = OpportuniteStatus.Canceled;
+    }
+
+    public void AttendedLead()
+    {
+        StartLead = DateTime.Now;
+        Status = OpportuniteStatus.Attended;
     }
 }

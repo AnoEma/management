@@ -14,7 +14,7 @@ public class GetPersonQueryHandler(IPersonApiHttpClient personApiHttpClient) : I
 
         if (result.IsFailure)
         {
-            return Result.Failure<GetPersonResponse>("");
+            return Result.Failure<GetPersonResponse>("Error");
         }
         GetPersonResponse response = GetPersonResponse.CreatePersonResponse(result.Value);
 

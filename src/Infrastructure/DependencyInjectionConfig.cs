@@ -1,4 +1,5 @@
 ﻿using Infrastructure.DataConfiguration;
+using Infrastructure.HttpClients.Addresses;
 using Infrastructure.HttpClients.Persons;
 using Infrastructure.HttpClients.Quotations;
 using Infrastructure.HttpClients.Vehicles;
@@ -23,5 +24,6 @@ public static class DependencyInjectionConfig
         services.AddQuotationApiHttpClients(configuration);
         services.AddPersonApiHttpClients(configuration);
         services.AddVehicleApiHttpClients(configuration);
+        services.AddAddressApiHttpClients(configuration);
     }
 }

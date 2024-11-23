@@ -3,8 +3,9 @@
 public enum OpportuniteStatus : byte
 {
     Pending = 1,
-    Sold = 2,
-    Issued = 3,
+    Attended = 2,
+    Sold = 3,
+    Issued = 4,
     Canceled = 0,
     NotSold = 5
 }
