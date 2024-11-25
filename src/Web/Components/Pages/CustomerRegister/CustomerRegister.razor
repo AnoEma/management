@@ -1,16 +1,16 @@
 ﻿@page "/customer-register"
 
 <div class="container">
-    <h1>Cadastro cliente</h1>
+    <h1>Criar o lead</h1>
     <form>
         <div class="field-compound">
             <div class="field">
-                <label for="nome">Nome</label>
+                <label for="nome">Nome Completo</label>
                 <input type="text" id="nome" name="nome" placeholder="Nome">
             </div>
             <div class="field">
-                <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="sobrenome" name="sobrenome" placeholder="Sobrenome">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" placeholder="CPF">
             </div>
         </div>
         <div class="field-compound">
@@ -26,12 +26,12 @@
 
         <div class="field-compound">
             <div class="field">
-                <label for="cpf">CPF</label>
-                <input type="text" id="cpf" name="cpf" placeholder="CPF">
-            </div>
-            <div class="field">
                 <label for="dataNascimento">Data Nascimento</label>
                 <input type="date" id="dataNascimento" name="dataNascimento" placeholder="Data Nascimento">
+            </div>
+            <div class="field">
+                <label for="gender">Sexo</label>
+                <input type="text" id="gender" name="gender" placeholder="Escolha">
             </div>
         </div>
 
@@ -43,6 +43,16 @@
             <div class="field">
                 <label for="placa">Veículo</label>
                 <input type="text" id="placa" name="model" placeholder="Modelo do veículo">
+            </div>
+        </div>
+        <div class="field-compound">
+            <div class="field">
+                <label for="zipCode">Cep</label>
+                <input type="text" id="zipCode" name="zipCode" placeholder="Cep residencial">
+            </div>
+            <div class="field">
+                <label for="address">Endereço</label>
+                <input type="text" id="address" name="address" placeholder="Endereço residencial">
             </div>
         </div>
         <input type="submit" value="Salvar">
