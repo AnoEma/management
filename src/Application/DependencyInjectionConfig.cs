@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Persons;
+﻿using Application.UseCases.Addresses;
+using Application.UseCases.Persons;
 using Application.UseCases.SolicitationLeads;
 using Application.UseCases.SolicitationLeads.Querys;
 using Application.UseCases.Vehicles;
@@ -14,6 +15,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IGetPersonQueryHandler, GetPersonQueryHandler>();
         services.AddScoped<IGetVehicleQueryHandler, GetVehicleQueryHandler>();
         services.AddScoped<ISolicitationLeadQueryHandler, SolicitationLeadQueryHandler>();
+        services.AddScoped<IGetAdressQueryHandler, GetAdressQueryHandler>();
 
         //Command Handlers
         services.AddScoped<ICreateSolicitationLeadCommandHandler, CreateSolicitationLeadCommandHandler>();

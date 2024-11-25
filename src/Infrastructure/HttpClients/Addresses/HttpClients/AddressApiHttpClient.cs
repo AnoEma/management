@@ -6,7 +6,7 @@ namespace Infrastructure.HttpClients.Addresses.HttpClients;
 
 public class AddressApiHttpClient(HttpClient httpClient) : IAddressApiHttpClient
 {
-    public async Task<Result> GetAddressAsync(string zipCode, CancellationToken cancellationToken = default)
+    public async Task<Result<AddressResponse>> GetAddressAsync(string zipCode, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -22,14 +22,14 @@ public class AddressApiHttpClient(HttpClient httpClient) : IAddressApiHttpClient
         }
         catch (Exception ex)
         {
-            return Result.Failure<HttpResponseMessage>($"Error occurred : {ex.Message}");
+            return Result.Failure<AddressResponse>($"Error occurred : {ex.Message}");
         }
     }
 
     private static AddressResponse ReadXlm(string response)
     {
-        XmlSerializer soapSerializer = new XmlSerializer(typeof(SoapEnvelope));
-        using StringReader reader = new StringReader(response);
+        XmlSerializer soapSerializer = new(typeof(SoapEnvelope));
+        using StringReader reader = new(response);
         SoapEnvelope envelope = (SoapEnvelope)soapSerializer.Deserialize(reader);
         string encodedReturn = envelope.Body.ConsultaCEPResponse.Return;
 
