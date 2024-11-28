@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace Infrastructure.HttpClients.Addresses.HttpClients;
 
@@ -16,7 +15,7 @@ public class AddressApiHttpClient(HttpClient httpClient) : IAddressApiHttpClient
             httpResponse.EnsureSuccessStatusCode();
 
             var response = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
-            AddressResponse result = ReadXlm(response);
+            AddressResponse result = AddressResponse.CreateResponse(response);
 
             return Result.Success(result);
         }
@@ -25,22 +24,6 @@ public class AddressApiHttpClient(HttpClient httpClient) : IAddressApiHttpClient
             return Result.Failure<AddressResponse>($"Error occurred : {ex.Message}");
         }
     }
-
-    private static AddressResponse ReadXlm(string response)
-    {
-        XmlSerializer soapSerializer = new(typeof(SoapEnvelope));
-        using StringReader reader = new(response);
-        SoapEnvelope envelope = (SoapEnvelope)soapSerializer.Deserialize(reader);
-        string encodedReturn = envelope.Body.ConsultaCEPResponse.Return;
-
-        string decodedReturn = System.Net.WebUtility.HtmlDecode(encodedReturn);
-
-        XmlSerializer addressSerializer = new(typeof(AddressResponse));
-
-        using StringReader addressReader = new(decodedReturn);
-        return (AddressResponse)addressSerializer.Deserialize(addressReader);
-    }
-
     private static string BuildCommand(string zipCode)
     {
         string password = "G580r$fW$$$@@fhOt%5029#fZZZs%8jQp.nX*tf86.T%gAgp";

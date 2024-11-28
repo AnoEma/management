@@ -42,7 +42,7 @@ public static class DependencyInjectionConfig
 
     private static AsyncPolicy<HttpResponseMessage> GetRetryPolicy(IConfiguration configuration)
     {
-        VehicleApiHttpClientOptions? retryOptions = configuration
+        VehicleApiHttpClientOptions retryOptions = configuration
             .GetSection(nameof(VehicleApiHttpClientOptions))
             .Get<VehicleApiHttpClientOptions>();
 

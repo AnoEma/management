@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(InfrastructureDbContext))]
-    [Migration("20241120234043_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241128013149_ManagementMigration2")]
+    partial class ManagementMigration2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,40 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AccountPayment");
+                });
+
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Complement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Neighborhood")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Comment", b =>
@@ -177,7 +211,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Insured");
+                    b.ToTable("Insureds");
                 });
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.OpportuniteLead", b =>
@@ -188,16 +222,22 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime?>("CanceledDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("InsuredId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("IssueDate")
+                    b.Property<DateTime?>("IssueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("SaleDate")
+                    b.Property<DateTime?>("SaleDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartLead")
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("Status")
@@ -278,6 +318,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CommentId")
                         .HasColumnType("int");
 
@@ -296,6 +339,12 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("PrimaryDriverId")
                         .HasColumnType("int");
 
+                    b.Property<string>("QuotationId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("QuotationToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
@@ -306,6 +355,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CommentId");
 
@@ -475,6 +526,10 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.SolicitationLead", b =>
                 {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
                     b.HasOne("Infrastructure.Repository.Leads.Commands.Comment", "Comment")
                         .WithMany()
                         .HasForeignKey("CommentId");
@@ -498,6 +553,8 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Repository.Leads.Commands.Vehicle", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId");
+
+                    b.Navigation("Address");
 
                     b.Navigation("Comment");
 

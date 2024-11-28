@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class ManagementMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,25 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AccountPayment", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Complement = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Neighborhood = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +85,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Insured",
+                name: "Insureds",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -85,7 +104,7 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Insured", x => x.Id);
+                    table.PrimaryKey("PK_Insureds", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,17 +230,19 @@ namespace Infrastructure.Migrations
                     Status = table.Column<byte>(type: "tinyint", nullable: false),
                     Type = table.Column<byte>(type: "tinyint", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartLead = table.Column<DateTime>(type: "datetime2", nullable: false),
                     InsuredId = table.Column<int>(type: "int", nullable: false),
-                    SaleDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IssueDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    SaleDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IssueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CanceledDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OpportuniteLeads", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OpportuniteLeads_Insured_InsuredId",
+                        name: "FK_OpportuniteLeads_Insureds_InsuredId",
                         column: x => x.InsuredId,
-                        principalTable: "Insured",
+                        principalTable: "Insureds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -265,6 +286,7 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GuidSolicitation = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuotationId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<byte>(type: "tinyint", nullable: false),
                     OwnerId = table.Column<int>(type: "int", nullable: true),
                     PrimaryDriverId = table.Column<int>(type: "int", nullable: true),
@@ -272,11 +294,18 @@ namespace Infrastructure.Migrations
                     CommentId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TransmissionId = table.Column<int>(type: "int", nullable: true),
-                    OpportuniteLeadId = table.Column<int>(type: "int", nullable: true)
+                    OpportuniteLeadId = table.Column<int>(type: "int", nullable: true),
+                    AddressId = table.Column<int>(type: "int", nullable: true),
+                    QuotationToken = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SolicitationLeads", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SolicitationLeads_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Address",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SolicitationLeads_Comments_CommentId",
                         column: x => x.CommentId,
@@ -328,6 +357,11 @@ namespace Infrastructure.Migrations
                 name: "IX_PaymentData_CreditPaymentId",
                 table: "PaymentData",
                 column: "CreditPaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SolicitationLeads_AddressId",
+                table: "SolicitationLeads",
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SolicitationLeads_CommentId",
@@ -386,6 +420,9 @@ namespace Infrastructure.Migrations
                 name: "CreditPayment");
 
             migrationBuilder.DropTable(
+                name: "Address");
+
+            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -407,7 +444,7 @@ namespace Infrastructure.Migrations
                 name: "Driver17To25s");
 
             migrationBuilder.DropTable(
-                name: "Insured");
+                name: "Insureds");
 
             migrationBuilder.DropTable(
                 name: "VehicleDetails");

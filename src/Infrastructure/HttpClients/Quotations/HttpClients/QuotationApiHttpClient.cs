@@ -6,7 +6,7 @@ namespace Infrastructure.HttpClients.Quotations.HttpClients;
 
 public class QuotationApiHttpClient(HttpClient httpClient) : IQuotationApiHttpClient
 {
-    public async Task<Result> CreatQuotationAsync(QuotationRequest command, CancellationToken cancellationToken = default)
+    public async Task<Result<QuotationResponse>> CreatQuotationAsync(QuotationRequest command, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -17,13 +17,15 @@ public class QuotationApiHttpClient(HttpClient httpClient) : IQuotationApiHttpCl
 
             httpResponse.EnsureSuccessStatusCode();
 
-            var response = httpResponse.Content.ReadAsStringAsync(cancellationToken);
+            var response = await httpResponse.Content.ReadAsStringAsync(cancellationToken);
 
-            return Result.Success(response);
+            QuotationResponse result = QuotationResponse.CreateResponse(response);
+
+            return Result.Success(result);
         }
         catch (Exception ex)
         {
-            return Result.Failure<HttpResponseMessage>($"Error occurred : {ex.Message}");
+            return Result.Failure<QuotationResponse>($"Error occurred : {ex.Message}");
         }
     }
 

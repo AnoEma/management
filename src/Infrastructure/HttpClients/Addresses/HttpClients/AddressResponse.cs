@@ -25,6 +25,21 @@ public class AddressResponse
 
     [XmlElement(ElementName = "UF")]
     public string Uf { get; set; }
+
+    public static AddressResponse CreateResponse(string response)
+    {
+        XmlSerializer soapSerializer = new(typeof(SoapEnvelope));
+        using StringReader reader = new(response);
+        SoapEnvelope envelope = (SoapEnvelope)soapSerializer.Deserialize(reader);
+        string encodedReturn = envelope.Body.ConsultaCEPResponse.Return;
+
+        string decodedReturn = System.Net.WebUtility.HtmlDecode(encodedReturn);
+
+        XmlSerializer addressSerializer = new(typeof(AddressResponse));
+
+        using StringReader addressReader = new(decodedReturn);
+        return (AddressResponse)addressSerializer.Deserialize(addressReader);
+    }
 }
 
 [XmlRoot(ElementName = "Envelope", Namespace = "http://schemas.xmlsoap.org/soap/envelope/")]

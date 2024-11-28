@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using Infrastructure.HttpClients.Addresses.HttpClients;
 using Infrastructure.HttpClients.Quotations.HttpClients;
 using Infrastructure.Repository.Leads;
 using Infrastructure.Repository.Leads.Commands;
@@ -7,29 +8,32 @@ namespace Application.UseCases.SolicitationLeads;
 
 public class CreateSolicitationLeadCommandHandler(
     IQuotationApiHttpClient quotationApiHttpClient,
-    ILeadCommandRepository commandRepository
+    ILeadCommandRepository commandRepository,
+    IAddressApiHttpClient addressApiHttpClient
 ) : ICreateSolicitationLeadCommandHandler
 {
     public async Task<Result> HandleAsync(CreateSolicitationLeadCommand command, CancellationToken cancellationToken = default)
     {
         QuotationRequest requestCommand = CreateRequestCommand(command);
-        Result response = await quotationApiHttpClient.CreatQuotationAsync(requestCommand, cancellationToken);
+        Result<QuotationResponse> response = await quotationApiHttpClient.CreatQuotationAsync(requestCommand, cancellationToken);
+
+        Result<AddressResponse> address = await addressApiHttpClient.GetAddressAsync(command.Vehicle.OvernightZipCode, cancellationToken);
 
         if (response.IsFailure)
         {
             return Result.Failure("Erro");
         }
-        await commandRepository.SaveLeadAsync(CreateCommand(command), cancellationToken);
+        await commandRepository.SaveLeadAsync(CreateCommand(command, response.Value, address.Value), cancellationToken);
 
         return response;
     }
 
-    private static Infrastructure.Repository.Leads.Commands.SolicitationLead CreateCommand(CreateSolicitationLeadCommand command)
+    private static SolicitationLead CreateCommand(CreateSolicitationLeadCommand command, QuotationResponse quotationResponse, AddressResponse addressResponse)
     {
-
-        return new Infrastructure.Repository.Leads.Commands.SolicitationLead
+        return new SolicitationLead
         {
             GuidSolicitation = Guid.NewGuid(),
+            QuotationId = quotationResponse.QuotationId,
             Owner = new Infrastructure.Repository.Leads.Commands.Owner
             {
                 BirthDate = command.Owner.BirthDate,
@@ -95,7 +99,18 @@ public class CreateSolicitationLeadCommandHandler(
                 CreateAt = DateTime.Now,
             },
             CreatedAt = DateTime.Now,
-            Status = SolicitationStatus.Pending
+            Status = SolicitationStatus.Pending,
+            QuotationToken = quotationResponse.QuotationToken,
+            Address = new Address
+            {
+                City = addressResponse.Municipio,
+                Number = "",
+                Complement = "",
+                Neighborhood = addressResponse.Bairro,
+                State = addressResponse.Uf,
+                Street = addressResponse.Logradouro,
+                ZipCode = addressResponse.Cep
+            }
         };
     }
 

@@ -4,6 +4,7 @@ public class SolicitationLead
 {
     public int Id { get; set; }
     public Guid GuidSolicitation { get; set; }
+    public string QuotationId { get; set; }
     public SolicitationStatus Status { get; set; }
     public Owner Owner { get; set; }
     public DriverP PrimaryDriver { get; set; }
@@ -13,4 +14,5 @@ public class SolicitationLead
     public Transmission Transmission { get; set; }
     public OpportuniteLead OpportuniteLead { get; set; }
     public Address Address { get; set; }
+    public string QuotationToken { get; set; }
 }
