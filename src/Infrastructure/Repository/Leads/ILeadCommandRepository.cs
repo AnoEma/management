@@ -5,5 +5,5 @@ namespace Infrastructure.Repository.Leads;
 
 public interface ILeadCommandRepository
 {
-    Task SaveLeadAsync(SolicitationLead command, CancellationToken cancellationToken = default);
+    Task<Result<int>> SaveLeadAsync(SolicitationLead command, CancellationToken cancellationToken = default);
 }

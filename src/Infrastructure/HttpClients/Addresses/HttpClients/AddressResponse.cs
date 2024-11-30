@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using Infrastructure.Extensions;
+using System.Xml.Serialization;
 
 namespace Infrastructure.HttpClients.Addresses.HttpClients;
 
@@ -28,17 +29,10 @@ public class AddressResponse
 
     public static AddressResponse CreateResponse(string response)
     {
-        XmlSerializer soapSerializer = new(typeof(SoapEnvelope));
-        using StringReader reader = new(response);
-        SoapEnvelope envelope = (SoapEnvelope)soapSerializer.Deserialize(reader);
-        string encodedReturn = envelope.Body.ConsultaCEPResponse.Return;
+        string encodedReturn = response.DeserializeFromXml<SoapEnvelope>().Body.ConsultaCEPResponse.Return;
+        string decodedReturn = encodedReturn.DecodeHtml();
 
-        string decodedReturn = System.Net.WebUtility.HtmlDecode(encodedReturn);
-
-        XmlSerializer addressSerializer = new(typeof(AddressResponse));
-
-        using StringReader addressReader = new(decodedReturn);
-        return (AddressResponse)addressSerializer.Deserialize(addressReader);
+        return decodedReturn.DeserializeFromXml<AddressResponse>();
     }
 }
 

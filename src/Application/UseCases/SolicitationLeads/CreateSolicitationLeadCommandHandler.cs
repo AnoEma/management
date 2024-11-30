@@ -18,14 +18,15 @@ public class CreateSolicitationLeadCommandHandler(
         Result<QuotationResponse> response = await quotationApiHttpClient.CreatQuotationAsync(requestCommand, cancellationToken);
 
         Result<AddressResponse> address = await addressApiHttpClient.GetAddressAsync(command.Vehicle.OvernightZipCode, cancellationToken);
+        Result<int> result = await commandRepository.SaveLeadAsync(CreateCommand(command, response.Value, address.Value), cancellationToken);
+
 
         if (response.IsFailure)
         {
             return Result.Failure("Erro");
         }
-        await commandRepository.SaveLeadAsync(CreateCommand(command, response.Value, address.Value), cancellationToken);
 
-        return response;
+        return Result.Success(result);
     }
 
     private static SolicitationLead CreateCommand(CreateSolicitationLeadCommand command, QuotationResponse quotationResponse, AddressResponse addressResponse)

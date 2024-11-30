@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Infrastructure.Extensions;
 
@@ -17,6 +18,7 @@ public static class JsonHttpContentSerializationExtension
         return JsonConvert.SerializeObject(request);
     }
 
+    #region Serialize Request XML
     public static string SerializeRequestToXml(this object request)
     {
         XmlDocument xmlDocument = JsonConvert.DeserializeXmlNode(Serialize(request));
@@ -34,4 +36,20 @@ public static class JsonHttpContentSerializationExtension
         doc.WriteTo(xmlTextWriter);
         return stringWriter.ToString();
     }
+    #endregion
+
+    #region Deserialize Response XML
+    public static T DeserializeFromXml<T>(this string xml)
+    {
+        XmlSerializer serializer = new(typeof(T));
+        using StringReader reader = new(xml);
+        return (T)serializer.Deserialize(reader);
+    }
+
+    public static string DecodeHtml(this string encodedString)
+    {
+        return System.Net.WebUtility.HtmlDecode(encodedString);
+    }
+
+    #endregion
 }
