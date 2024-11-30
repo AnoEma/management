@@ -6,8 +6,7 @@ int TIPOSEG,
 Segurado SEGURADO,
 Proprietario PROPRIETARIO,
 CondutorP CONDUTORP,
-Veiculo VEICULO,
-DadosVeiculo DadosVeiculo
+Veiculo VEICULO
 );
 
 internal record Segurado
@@ -54,6 +53,11 @@ int EXISTE17A25
 
 internal record Veiculo
 (
+int CODCAR,
+string MARCA,
+string ANOFABR,
+string ANOMODELO,
+string COMBUSTIVEL,
 string ZEROKM,
 string UTILIZACAO,
 PerfilUsoVeic PERFILUSOVEIC,

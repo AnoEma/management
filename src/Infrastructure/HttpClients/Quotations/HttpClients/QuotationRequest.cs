@@ -59,6 +59,11 @@ int EXISTE17A25
 
 public record Veiculo
 (
+int CODCAR,
+string MARCA,
+string ANOFABR,
+string ANOMODELO,
+string COMBUSTIVEL,
 string ZEROKM,
 string UTILIZACAO,
 PerfilUsoVeic PERFILUSOVEIC,

@@ -18,6 +18,11 @@ internal static class QuotationRequestToCommandAdapter
     private static Vehicle GetVehicle(Veiculo veiculo)
     {
         return new(
+            CodCar: veiculo.CODCAR,
+            Brand: veiculo.MARCA,
+            ManufactureYear: veiculo.ANOFABR,
+            ModelYear: veiculo.ANOMODELO,
+            Fuel: veiculo.COMBUSTIVEL,
             IsNew: veiculo.ZEROKM,
             Usage: veiculo.UTILIZACAO,
             UsageProfile: new VehicleUsageProfile(veiculo.PERFILUSOVEIC.USO),

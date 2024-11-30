@@ -131,6 +131,11 @@ public class CreateSolicitationLeadCommandHandler(
     private static Veiculo GetVehicle(Vehicle vehicle)
     {
         return new(
+            CODCAR: vehicle.CodCar,
+            MARCA: vehicle.Brand,
+            ANOFABR: vehicle.ManufactureYear,
+            ANOMODELO: vehicle.ModelYear,
+            COMBUSTIVEL: vehicle.Fuel,
             ZEROKM: vehicle.IsNew,
             UTILIZACAO: vehicle.Usage,
             PERFILUSOVEIC: new PerfilUsoVeic(vehicle.UsageProfile.Usage),

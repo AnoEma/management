@@ -54,6 +54,11 @@ public record Driver17To25
 
 public record Vehicle
 (
+int CodCar,
+string Brand,
+string ManufactureYear,
+string ModelYear,
+string Fuel,
 string IsNew,
 string Usage,
 VehicleUsageProfile UsageProfile,
