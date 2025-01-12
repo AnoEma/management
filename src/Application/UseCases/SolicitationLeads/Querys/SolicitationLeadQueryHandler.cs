@@ -6,7 +6,7 @@ using Infrastructure.Repository.SolicitationLeads.Querys;
 
 namespace Application.UseCases.SolicitationLeads.Querys;
 
-public class SolicitationLeadQueryHandler(ISolicitationLeadQueryRepository queryRepository) : ISolicitationLeadQueryHandler
+public class SolicitationLeadQueryHandler(ISolicitationLeadRepository queryRepository) : ISolicitationLeadQueryHandler
 {
     public async Task<Result<IEnumerable<Solicitation>>> Handler(CancellationToken cancellationToken = default)
     {

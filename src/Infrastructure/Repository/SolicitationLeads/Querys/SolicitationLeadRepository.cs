@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository.SolicitationLeads.Querys;
 
-public class SolicitationLeadQueryRepository(InfrastructureDbContext context) : ISolicitationLeadQueryRepository
+public class SolicitationLeadRepository(InfrastructureDbContext context) : ISolicitationLeadRepository
 {
     public async Task<Result> GetSolicitationLeadByDocumentAsync(string document, CancellationToken cancellationToken)
     {

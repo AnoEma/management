@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Repository.Leads.Commands;
+using Infrastructure.Repository.Users.Commands;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataConfiguration;
@@ -21,6 +22,7 @@ public class InfrastructureDbContext : DbContext
     public DbSet<VehicleDetails> VehicleDetails { get; set; }
     public DbSet<OpportuniteLead> OpportuniteLeads { get; set; }
     public DbSet<Insured> Insureds { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

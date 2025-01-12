@@ -8,7 +8,7 @@ namespace Application.UseCases.SolicitationLeads;
 
 public class CreateSolicitationLeadCommandHandler(
     IQuotationApiHttpClient quotationApiHttpClient,
-    ILeadCommandRepository commandRepository,
+    ILeadRepository commandRepository,
     IAddressApiHttpClient addressApiHttpClient
 ) : ICreateSolicitationLeadCommandHandler
 {

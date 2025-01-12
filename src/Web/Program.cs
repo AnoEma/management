@@ -1,8 +1,11 @@
 using Web.Components;
+using Web.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.RegisterServices();
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 

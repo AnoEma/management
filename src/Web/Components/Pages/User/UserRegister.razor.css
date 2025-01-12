@@ -47,7 +47,8 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="tel"],
-input[type="date"] {
+input[type="date"], 
+select{
     width: 100%;
     padding: 10px;
     margin: 5px 0 15px;
@@ -56,9 +57,12 @@ input[type="date"] {
     box-sizing: border-box;
     font-size: 16px;
 }
+select {
+    display: inline-block;
+}
 
-input[type="submit"] {
-    width: 150px; /* Define uma largura fixa para o botão */
+button[type="submit"] {
+    width: 150px;
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -66,7 +70,7 @@ input[type="submit"] {
     border-radius: 4px;
     cursor: pointer;
     font-size: 18px;
-    align-self: center; /* Centraliza o botão no form */
+    align-self: center;
     margin-top: 20px;
 }
 
