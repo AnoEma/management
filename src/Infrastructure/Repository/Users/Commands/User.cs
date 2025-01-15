@@ -15,6 +15,8 @@ public class User
     public int TeamName { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime AdmissionDate { get; set; }
+    public DateTime? DateDismissal { get; set; } = null;
     public DateTime? UpdatedAt { get; set; } = null;
     public DateTime? DeleteIn { get; set; } = null;
 }

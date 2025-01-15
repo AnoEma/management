@@ -6,7 +6,8 @@ public record Team(int Value, string Text)
     [
         new(0, ""),
         new(1, "Detroide"),
-        new(2, "Feminino"),
-        new(3, "Não Binário")
+        new(2, "Las Vegas"),
+        new(3, "São Paulo"),
+        new(4, "Tulsa")
     ];
 };

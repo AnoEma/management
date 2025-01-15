@@ -1,13 +1,12 @@
-﻿@page "/registrar-usuario"
+﻿@page "/editar-usuario/{id:int}"
 @rendermode InteractiveServer
 @using Web.Model
 @using Web.Services.Interfaces
 @inject NavigationManager Navigation
 
-
 <div class="container">
-    <h1>Cadastro Usuario</h1>
-    <form method="post" @onsubmit="Submit" @formname="user-register">
+    <h1>Editar Usuário</h1>
+    <form method="post" @onsubmit="Submit" @formname="user-edit">
         <div class="field-compound">
             <div class="field">
                 <label for="name">Nome</label>
@@ -32,18 +31,18 @@
         <div class="field-compound">
             <div class="field">
                 <label for="cpf">CPF</label>
-                <input type="text" id="cpf" name="cpf" placeholder="CPF" @bind-value="Model.Cpf">
+                <input type="text" id="cpf" name="cpf" placeholder="CPF" @bind-value="Model.Cpf" readonly>
             </div>
             <div class="field">
                 <label for="dateofbirth">Data Nascimento</label>
-                <input type="date" id="dateofbirth" name="dateofbirth" placeholder="Data Nascimento" @bind-value="Model.BirthDate">
+                <input type="date" id="dateofbirth" @bind-value="Model.BirthDate" name="dateofbirth" placeholder="Data Nascimento" readonly>
             </div>
         </div>
 
         <div class="field-compound">
             <div class="field">
                 <label for="gender">Sexo</label>
-                <select class="form-select" @onchange="@OnSelectGender">
+                <select class="form-select" @bind="Model.Gender">
                     <option value="" disabled>-- Selecione o Sexo --</option>
                     @foreach (var gender in Genders)
                     {
@@ -53,8 +52,8 @@
             </div>
             <div class="field">
                 <label for="profileAccess">Perfil do usuário</label>
-                <select class="form-select" @onchange="@OnSelectProfileAccess">
-                    <option value="" disabled>-- Selecione o tipo acesso --</option>
+                <select class="form-select" @bind="Model.ProfileAccess">
+                    <option value="" disabled>-- Selecione o tipo de acesso --</option>
                     @foreach (var option in ProfileAccessOptions)
                     {
                         <option value="@option.Value">@option.Text</option>
@@ -65,12 +64,12 @@
         <div class="field-compound">
             <div class="field">
                 <label for="user">Usuário</label>
-                <input type="text" id="user" name="user" placeholder="Usuário" @bind-value="Model.User">
+                <input type="text" id="user" name="user" placeholder="Usuário" @bind-value="Model.User" readonly>
             </div>
             <div class="field">
                 <label for="team">Equipe do usuário</label>
-                <select class="form-select" @onchange="@OnSelectTeam">
-                    <option value="" disabled>-- Selecione o equipe --</option>
+                <select class="form-select" @bind="Model.Team">
+                    <option value="" disabled>-- Selecione a equipe --</option>
                     @foreach (var option in TeamOptions)
                     {
                         <option value="@option.Value">@option.Text</option>
@@ -78,35 +77,46 @@
                 </select>
             </div>
         </div>
-        <button type="submit">Criar</button>
+        <button type="submit">Salvar</button>
     </form>
 </div>
 
-
 @code {
+    [Parameter]
+    public int Id { get; set; }
+
     private IReadOnlyList<Gender> Genders = Gender.GetGenders;
     private IReadOnlyList<ProfileAccess> ProfileAccessOptions = ProfileAccess.GetProfileAccess;
     private IReadOnlyList<Team> TeamOptions = Team.GetTeams;
 
-    [SupplyParameterFromForm]
-    private UserModel Model { get; set; }
+    private UserModel Model { get; set; } = new();
 
     [Inject]
     private IUserService _userService { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        Model ??= new();
+        CancellationToken cancellationToken = new CancellationToken();
+
+        var result = await _userService.GetUserByIdAsync(Id, cancellationToken);
+        if (result.IsFailure)
+        {
+            return;
+        }
+
+        Model = result.Value;
     }
 
     private async Task Submit()
     {
-        await _userService.AddUserAsync(Model);
-        ReloadPage();
-    }
-    private void ReloadPage()
-    {
-        Navigation.NavigateTo("/listar-usuarios", forceLoad: true);
+        CancellationToken cancellationToken = new CancellationToken();
+
+        var result = await _userService.UpdateUserAsync(Model, cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            Navigation.NavigateTo("/listar-usuarios");
+        }
     }
 
     #region Events Select
@@ -117,12 +127,12 @@
 
     void OnSelectGender(ChangeEventArgs e)
     {
-        Model.Gender = int.Parse(e.Value.ToString());
+        Model.Gender = (int)Gender.GetByValue(e.Value.ToString()).Value;
     }
 
     void OnSelectProfileAccess(ChangeEventArgs e)
     {
-        Model.ProfileAccess = int.Parse(e.Value.ToString());
+        Model.ProfileAccess = (int)ProfileAccess.GetByValue(e.Value.ToString()).Value;
     }
     #endregion
 }

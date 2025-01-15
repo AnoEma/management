@@ -1,5 +1,88 @@
-﻿<h3>UserList</h3>
+﻿@page "/listar-usuarios"
+@using CSharpFunctionalExtensions
+@using Web.Model
+@using Web.Services.Interfaces
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
+
+
+<h1>Lista dos usuarios</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Usuario</th>
+            <th>Equipe</th>
+            <th>Ativo</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (UsersList?.Any() == true)
+        {
+            foreach (var item in UsersList)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.User</td>
+                    <td>@item.Team</td>
+                    <td>@item.IsActive</td>
+                    <td class="td-button-edit">
+                        <button class="button edit" @onclick="() => OnEditUser(item.Id)">Editar</button>
+                    </td>
+                    <td class="td-button-delete">
+                        <button class="button delete" @onclick="() => OnDeleteUser(item.Id)">Excluir</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 
 @code {
 
+    [Inject]
+    private IUserService _userService { get; set; }
+
+    private IReadOnlyList<GetAllUserModel> UsersList = [];
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        CancellationToken cancellationToken = new CancellationToken();
+        var result = await _userService.GetUsersAsync(cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return;
+        }
+        UsersList = result.Value;
+    }
+
+    private async Task OnDeleteUser(int userId)
+    {
+        CancellationToken cancellationToken = new CancellationToken();
+
+        var result = await _userService.DeleteAsync(userId, cancellationToken);
+
+        if (result.IsSuccess)
+        {
+            ReloadPage();
+        }
+    }
+
+    private void OnEditUser(int userId)
+    {
+        Navigation.NavigateTo($"/editar-usuario/{userId}", forceLoad: true);
+    }
+
+    private void ReloadPage()
+    {
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
 }

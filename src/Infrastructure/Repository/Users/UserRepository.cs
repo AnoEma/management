@@ -12,7 +12,6 @@ internal class UserRepository(InfrastructureDbContext context) : IUserRepository
         Result<List<User>> result = await context
             .Users
             .AsNoTracking()
-            .Where(x => x.IsActive)
             .ToListAsync(cancellationToken);
 
         return result;
@@ -34,7 +33,7 @@ internal class UserRepository(InfrastructureDbContext context) : IUserRepository
 
         return Result.Success(command.Id);
     }
-    public async Task DeleteAsync(int userId, CancellationToken cancellationToken = default)
+    public async Task<Result> DeleteAsync(int userId, CancellationToken cancellationToken = default)
     {
         await context.Users
                    .Where(x => x.Id == userId)
@@ -44,8 +43,47 @@ internal class UserRepository(InfrastructureDbContext context) : IUserRepository
                             x => x.IsActive,
                             x => false)
                         .SetProperty(
-                            x => x.DeleteIn,
+                            x => x.DateDismissal,
                             x => DateTime.Now)
-                        ,cancellationToken);
+                        , cancellationToken);
+
+        return Result.Success();
+    }
+
+    public async Task<Result> UpdateAsync(User command, CancellationToken cancellationToken = default)
+    {
+        #region Update User
+        await context.Users
+          .Where(x => x.Id == command.Id)
+          .ExecuteUpdateAsync(update =>
+            update
+            .SetProperty(
+                x => x.FirstName,
+                x => command.FirstName)
+            .SetProperty(
+                x => x.LastName,
+                x => command.LastName)
+            .SetProperty(
+                x => x.PhoneNumber,
+                x => command.PhoneNumber)
+            .SetProperty(
+                x => x.Gender,
+                x => command.Gender)
+            .SetProperty(
+                x => x.Email,
+                x => command.Email)
+            .SetProperty(
+                x => x.AccessLevel,
+                x => command.AccessLevel)
+            .SetProperty(
+                x => x.TeamName,
+                x => command.TeamName)
+            .SetProperty(
+                x => x.UpdatedAt,
+                x => DateTime.Now)
+            , cancellationToken); 
+        #endregion
+
+        return Result.Success();
     }
 }

@@ -4,6 +4,7 @@ namespace Web.Model;
 
 public class UserModel
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -15,9 +16,10 @@ public class UserModel
     public string User { get; set; }
     public int Team { get; set; }
 
-    internal static CreateUserCommand CreateUserCommand(UserModel user)
+    internal static UserCommand CreateUserCommand(UserModel user)
     {
         return new(
+            Id: user.Id,
             Name: user.Name,
             LastName: user.LastName,
             Email: user.Email,
@@ -29,5 +31,23 @@ public class UserModel
             User: user.User,
             Team: user.Team
         );
+    }
+
+    internal static UserModel CreateUserModel(UserCommand value)
+    {
+        return new()
+        {
+            Id = value.Id,
+            Name = value.Name,
+            LastName = value.LastName,
+            Email = value.Email,
+            Phone = value.Phone,
+            Cpf = value.Cpf,
+            BirthDate = DateTime.Parse(value.BirthDate),
+            Gender = value.Gender,
+            ProfileAccess = value.ProfileAccess,
+            User = value.User,
+            Team = value.Team
+        };
     }
 }

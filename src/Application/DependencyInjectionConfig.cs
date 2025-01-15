@@ -3,6 +3,7 @@ using Application.UseCases.Persons;
 using Application.UseCases.SolicitationLeads;
 using Application.UseCases.SolicitationLeads.Querys;
 using Application.UseCases.Users.Commands;
+using Application.UseCases.Users.Querys;
 using Application.UseCases.Vehicles;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,9 +18,10 @@ public static class DependencyInjectionConfig
         services.AddScoped<IGetVehicleQueryHandler, GetVehicleQueryHandler>();
         services.AddScoped<ISolicitationLeadQueryHandler, SolicitationLeadQueryHandler>();
         services.AddScoped<IGetAdressQueryHandler, GetAdressQueryHandler>();
+        services.AddScoped<IGetAllUserQueryHandler, GetAllUserQueryHandler>();
 
         //Command Handlers
         services.AddScoped<ICreateSolicitationLeadCommandHandler, CreateSolicitationLeadCommandHandler>();
-        services.AddScoped<ICreateUserCommandHandler, CreateUserCommandHandler>();
+        services.AddScoped<IUserCommandHandler, UserCommandHandler>();
     }
 }
