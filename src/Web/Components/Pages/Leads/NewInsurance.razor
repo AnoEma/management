@@ -1,32 +1,38 @@
 ﻿@page "/"
 <h1>Listas dos leads</h1>
 
-<div class="list-group">
-    <div class="list-group-item list-group-item-action list-group-item-custom">
-        <div class="item-content">
-            <p>Nome</p>
-            <p>Placa</p>
-            <p>Status</p>
-        </div>
-    </div>
-    @foreach (var lead in Leads)
-    {
-        var buttonClass = lead.Status == "pendent"
-        ? "status-pendente"
-        : lead.Status == "não vendido"
-        ? "status-nao-vendido"
-        : "status-outro";
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome Cliente</th>
+            <th>Placa</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lead in Leads)
+        {
+            var buttonClass = lead.Status == "pendent"
+            ? "status-pendente"
+            : lead.Status == "não vendido"
+            ? "status-nao-vendido"
+            : "status-outro";
 
-        <a href="#" class="list-group-item list-group-item-action list-group-item-custom">
-            <div class="item-content">
-                <span class="bi bg-info"></span>
-                <span>@lead.Text</span>
-                <span>@lead.Placa</span>
-                <button class="status-button @buttonClass">@lead.Status</button>
-            </div>
-        </a>
-    }
-</div>
+            <tr>
+                <td>@lead.Text</td>
+                <td>@lead.Placa</td>
+                <td>@lead.Status</td>
+                <td>
+                    <button class="status-button @buttonClass">@lead.Status</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
 
 @code {
     private List<LeadTest> Leads { get; set; }

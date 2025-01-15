@@ -1,0 +1,87 @@
+﻿@page "/leads-renovacao"
+<h1>Listas dos leads</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome Cliente</th>
+            <th>Placa</th>
+            <th>Data Vigência Fim</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lead in Leads)
+        {
+            var buttonClass = lead.Status == "pendent"
+            ? "status-pendente"
+            : lead.Status == "não vendido"
+            ? "status-nao-vendido"
+            : "status-outro";
+
+            <tr>
+                <td>@lead.Text</td>
+                <td>@lead.Placa</td>
+                <td>@lead.Vigencia.Date</td>
+                <td>@lead.Status</td>
+                <td>
+                    <button class="status-button @buttonClass">@lead.Status</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@code {
+    private List<LeadTest> Leads { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Leads = new LeadTest().GetLeadTests();
+    }
+
+    class LeadTest
+    {
+        public string Text { get; set; }
+        public string Placa { get; set; }
+        public DateTime Vigencia { get; set; }
+        public string Status { get; set; }
+
+        public List<LeadTest> GetLeadTests()
+        {
+            return new List<LeadTest>
+            {
+                new LeadTest
+                {
+                    Text = "The current link item",
+                    Status = "pendent",
+                    Vigencia = DateTime.Now,
+                    Placa = "XXX-XXX"
+                },
+                new LeadTest
+                {
+                    Text = "The current link item",
+                    Status = "pendent",
+                    Vigencia = DateTime.Now.AddDays(1),
+                    Placa = "XXX-CCC"
+                },
+                new LeadTest
+                {
+                    Text = "The current link item",
+                    Status = "não vendido",
+                    Vigencia = DateTime.Now.AddDays(2),
+                    Placa = "XXX-VVV"
+                },
+                new LeadTest
+                {
+                    Text = "The current link item",
+                    Status = "Emitido",
+                    Vigencia = DateTime.Now.AddDays(3),
+                    Placa = "XXX-PPP"
+                }
+            };
+        }
+    }
+}
