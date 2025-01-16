@@ -8,6 +8,9 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
 {
     public void Configure(EntityTypeBuilder<Vehicle> builder)
     {
-        builder.HasKey(c => c.Id);
+        builder.HasKey(v => v.Id);
+        builder.HasOne(v => v.UsageProfile)
+               .WithOne()
+               .HasForeignKey<VehicleUsageProfile>(p => p.Id);
     }
 }

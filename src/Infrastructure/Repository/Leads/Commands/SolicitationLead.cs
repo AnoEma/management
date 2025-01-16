@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Repository.Leads.Commands;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Infrastructure.Repository.Leads.Commands;
 
 public class SolicitationLead
 {
@@ -6,13 +8,13 @@ public class SolicitationLead
     public Guid GuidSolicitation { get; set; }
     public string QuotationId { get; set; }
     public SolicitationStatus Status { get; set; }
-    public Owner Owner { get; set; }
-    public DriverP PrimaryDriver { get; set; }
-    public Vehicle Vehicle { get; set; }
-    public Comment Comment { get; set; }
+    public virtual Owner Owner { get; set; }
+    public virtual DriverPs PrimaryDriver { get; set; }
+    public virtual Vehicle Vehicle { get; set; }
+    public virtual Comment Comment { get; set; }
     public DateTime CreatedAt { get; set; }
-    public Transmission Transmission { get; set; }
-    public OpportuniteLead OpportuniteLead { get; set; }
-    public Address Address { get; set; }
+    public virtual Transmission Transmission { get; set; }
+    public virtual OpportuniteLead OpportuniteLead { get; set; }
+    public virtual Address Address { get; set; }
     public string QuotationToken { get; set; }
 }

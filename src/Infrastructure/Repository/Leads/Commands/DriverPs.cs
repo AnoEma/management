@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Repository.Leads.Commands;
 
-public class DriverP
+public class DriverPs
 {
     public int Id { get; set; }
     public string Cpf { get; set; }
@@ -10,7 +10,7 @@ public class DriverP
     public string MaritalStatus { get; set; }
     public string LivesWithInsured { get; set; }
     public string RelationshipToInsured { get; set; }
-    public Driver17To25 Driver17To25 { get; set; }
+    public virtual Driver17To25 Driver17To25 { get; set; }
 }
 
 public class Driver17To25

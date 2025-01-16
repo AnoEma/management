@@ -4,8 +4,8 @@ public class PaymentData
 {
     public int Id { get; set; }
     public PaymentType PaymentType { get; set; }
-    public AccountPayment AccountPayment { get; set; }
-    public CreditPayment CreditPayment { get; set; }
+    public virtual AccountPayment AccountPayment { get; set; }
+    public virtual CreditPayment CreditPayment { get; set; }
 }
 
 public class AccountPayment

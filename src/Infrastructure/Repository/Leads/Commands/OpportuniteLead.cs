@@ -11,7 +11,7 @@ public record OpportuniteLead
     public DateTime? SaleDate { get; set; } = null;
     public DateTime? IssueDate { get; set; } = null;
     public DateTime? CanceledDate { get; set; } = null;
-    public Insured Insured { get; set; }
+    public virtual Insured Insured { get; set; }
 
     public void SoldLead()
     {

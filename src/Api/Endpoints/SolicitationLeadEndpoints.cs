@@ -43,7 +43,7 @@ public static class SolicitationLeadEndpoints
         [FromServices] ISolicitationLeadQueryHandler queryHandler,
         CancellationToken cancellationToken)
     {
-        Monad.Result result = await queryHandler.Handler(cancellationToken);
+        Monad.Result result = await queryHandler.HandlerAsync(cancellationToken);
         return result.ToActionResult();
     }
 }

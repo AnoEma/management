@@ -14,5 +14,6 @@ public static class DependencyInjectionConfiguration
         builder.Services.AddAplicationService();
 
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<ILeadsService, LeadsService>();
     }
 }

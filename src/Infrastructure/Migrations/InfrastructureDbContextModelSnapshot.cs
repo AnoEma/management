@@ -18,6 +18,9 @@ namespace Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -38,10 +41,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Address", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -72,10 +72,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Comment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -126,13 +123,10 @@ namespace Infrastructure.Migrations
                     b.ToTable("Driver17To25s");
                 });
 
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.DriverP", b =>
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.DriverPs", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BirthDate")
                         .HasColumnType("nvarchar(max)");
@@ -214,10 +208,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.OpportuniteLead", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("CanceledDate")
                         .HasColumnType("datetime2");
@@ -253,10 +244,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Owner", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BirthDate")
                         .HasColumnType("nvarchar(max)");
@@ -315,26 +303,11 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("GuidSolicitation")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("OpportuniteLeadId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PrimaryDriverId")
-                        .HasColumnType("int");
 
                     b.Property<string>("QuotationId")
                         .HasColumnType("nvarchar(max)");
@@ -345,27 +318,7 @@ namespace Infrastructure.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
-                    b.Property<int?>("TransmissionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("OpportuniteLeadId");
-
-                    b.HasIndex("OwnerId");
-
-                    b.HasIndex("PrimaryDriverId");
-
-                    b.HasIndex("TransmissionId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("SolicitationLeads");
                 });
@@ -373,10 +326,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Transmission", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -404,10 +354,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Vehicle", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CirculationZipCode")
                         .HasColumnType("nvarchar(max)");
@@ -415,10 +365,19 @@ namespace Infrastructure.Migrations
                     b.Property<string>("IsNew")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModelYear")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OvernightLocation")
                         .HasColumnType("int");
 
                     b.Property<string>("OvernightZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Plate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ResidentialGarage")
@@ -430,9 +389,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Usage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsageProfileId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("VehicleDetailsId")
                         .HasColumnType("int");
 
@@ -440,8 +396,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UsageProfileId");
 
                     b.HasIndex("VehicleDetailsId");
 
@@ -465,6 +419,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ModelYear")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Plate")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("VehicleDetails");
@@ -473,10 +430,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Usage")
                         .HasColumnType("int");
@@ -547,17 +501,47 @@ namespace Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.DriverP", b =>
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Address", b =>
+                {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("Address")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.Address", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Comment", b =>
+                {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("Comment")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.Comment", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.DriverPs", b =>
                 {
                     b.HasOne("Infrastructure.Repository.Leads.Commands.Driver17To25", "Driver17To25")
                         .WithMany()
                         .HasForeignKey("Driver17To25Id");
+
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("PrimaryDriver")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.DriverPs", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Driver17To25");
                 });
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.OpportuniteLead", b =>
                 {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("OpportuniteLead")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.OpportuniteLead", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Infrastructure.Repository.Leads.Commands.Insured", "Insured")
                         .WithMany()
                         .HasForeignKey("InsuredId")
@@ -565,6 +549,15 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Insured");
+                });
+
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Owner", b =>
+                {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("Owner")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.Owner", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.PaymentData", b =>
@@ -582,36 +575,41 @@ namespace Infrastructure.Migrations
                     b.Navigation("CreditPayment");
                 });
 
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Transmission", b =>
+                {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("Transmission")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.Transmission", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Vehicle", b =>
+                {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
+                        .WithOne("Vehicle")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.Vehicle", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.VehicleDetails", "VehicleDetails")
+                        .WithMany()
+                        .HasForeignKey("VehicleDetailsId");
+
+                    b.Navigation("VehicleDetails");
+                });
+
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", b =>
+                {
+                    b.HasOne("Infrastructure.Repository.Leads.Commands.Vehicle", null)
+                        .WithOne("UsageProfile")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.SolicitationLead", b =>
                 {
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.OpportuniteLead", "OpportuniteLead")
-                        .WithMany()
-                        .HasForeignKey("OpportuniteLeadId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Owner", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.DriverP", "PrimaryDriver")
-                        .WithMany()
-                        .HasForeignKey("PrimaryDriverId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Transmission", "Transmission")
-                        .WithMany()
-                        .HasForeignKey("TransmissionId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId");
-
                     b.Navigation("Address");
 
                     b.Navigation("Comment");
@@ -629,17 +627,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Vehicle", b =>
                 {
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", "UsageProfile")
-                        .WithMany()
-                        .HasForeignKey("UsageProfileId");
-
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.VehicleDetails", "VehicleDetails")
-                        .WithMany()
-                        .HasForeignKey("VehicleDetailsId");
-
                     b.Navigation("UsageProfile");
-
-                    b.Navigation("VehicleDetails");
                 });
 #pragma warning restore 612, 618
         }

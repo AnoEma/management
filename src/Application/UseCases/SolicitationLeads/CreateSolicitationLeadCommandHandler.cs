@@ -58,14 +58,11 @@ public class CreateSolicitationLeadCommandHandler(
                 OvernightZipCode = command.Vehicle.OvernightZipCode,
                 ResidentialZipCode = command.Vehicle.ResidentialZipCode,
                 WorkGarage = command.Vehicle.WorkGarage,
-                VehicleDetails = new Infrastructure.Repository.Leads.Commands.VehicleDetails
-                {
-                    Model = command.Vehicle.VehicleDetails.Model,
-                    ModelYear = command.Vehicle.VehicleDetails.ModelYear,
-                    Brand = command.Vehicle.VehicleDetails.Brand,
-                }
+                Model = command.Vehicle.VehicleDetails.Model,
+                ModelYear = command.Vehicle.VehicleDetails.ModelYear,
+                Brand = command.Vehicle.VehicleDetails.Brand,
             },
-            PrimaryDriver = new Infrastructure.Repository.Leads.Commands.DriverP
+            PrimaryDriver = new Infrastructure.Repository.Leads.Commands.DriverPs
             {
                 Name = command.PrimaryDriver.Name,
                 BirthDate = command.PrimaryDriver.BirthDate,

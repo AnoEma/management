@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using Web.Model
+@using Web.Services.Interfaces
 <h1>Listas dos leads</h1>
 
 <table class="table table-striped">
@@ -6,25 +8,28 @@
         <tr>
             <th>Nome Cliente</th>
             <th>Placa</th>
+            <th>Modelo Veiculo</th>
+            <th>Ano modelo</th>
+            <th>Tipo de lead</th>
             <th>Status</th>
-            <th></th>
-            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var lead in Leads)
         {
-            var buttonClass = lead.Status == "pendent"
+            var buttonClass = lead.Status == 1
             ? "status-pendente"
-            : lead.Status == "não vendido"
+            : lead.Status == 2
             ? "status-nao-vendido"
             : "status-outro";
 
             <tr>
-                <td>@lead.Text</td>
-                <td>@lead.Placa</td>
-                <td>@lead.Status</td>
+                <td>@lead.FullName</td>
+                <td>@lead.Vehicle.Plate</td>
+                <td>@lead.Vehicle.Model</td>
+                <td>@lead.Vehicle.ModelYear</td>
+                <td>@lead.InsuranceType</td>
                 <td>
                     <button class="status-button @buttonClass">@lead.Status</button>
                 </td>
@@ -35,48 +40,22 @@
 </table>
 
 @code {
-    private List<LeadTest> Leads { get; set; }
+    private IReadOnlyList<LeadsModel> Leads = [];
 
-    protected override void OnInitialized()
+    [Inject]
+    private ILeadsService _service { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        Leads = new LeadTest().GetLeadTests();
-    }
+        CancellationToken cancellationToken = new();
 
-    class LeadTest
-    {
-        public string Text { get; set; }
-        public string Placa { get; set; }
-        public string Status { get; set; }
+        var result = await _service.GetLeads(cancellationToken);
 
-        public List<LeadTest> GetLeadTests()
+        if (result.IsFailure)
         {
-            return new List<LeadTest>
-            {
-                new LeadTest
-                {
-                    Text = "The current link item",
-                    Status = "pendent",
-                    Placa = "XXX-XXX"
-                },
-                new LeadTest
-                {
-                    Text = "The current link item",
-                    Status = "pendent",
-                    Placa = "XXX-CCC"
-                },
-                new LeadTest
-                {
-                    Text = "The current link item",
-                    Status = "não vendido",
-                    Placa = "XXX-VVV"
-                },
-                new LeadTest
-                {
-                    Text = "The current link item",
-                    Status = "Emitido",
-                    Placa = "XXX-PPP"
-                }
-            };
+            return;
         }
+
+        Leads = result.Value;
     }
 }
