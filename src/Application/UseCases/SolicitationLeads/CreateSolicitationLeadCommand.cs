@@ -58,6 +58,7 @@ int CodCar,
 string Brand,
 string ManufactureYear,
 string ModelYear,
+string Model,
 string Fuel,
 string IsNew,
 string Usage,
@@ -67,8 +68,7 @@ string CirculationZipCode,
 string ResidentialZipCode,
 string ResidentialGarage,
 string WorkGarage,
-int OvernightLocation,
-VehicleDetails VehicleDetails
+int OvernightLocation
 );
 
 public record VehicleUsageProfile

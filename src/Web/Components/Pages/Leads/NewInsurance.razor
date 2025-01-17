@@ -1,43 +1,63 @@
 ﻿@page "/"
 @using Web.Model
 @using Web.Services.Interfaces
-<h1>Listas dos leads</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas dos Leads</title>
+</head>
+<body>
+    <h1>Listas dos Leads</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nome Cliente</th>
-            <th>Placa</th>
-            <th>Modelo Veiculo</th>
-            <th>Ano modelo</th>
-            <th>Tipo de lead</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var lead in Leads)
-        {
-            var buttonClass = lead.Status == 1
-            ? "status-pendente"
-            : lead.Status == 2
-            ? "status-nao-vendido"
-            : "status-outro";
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome Cliente</th>
+                    <th>Placa</th>
+                    <th>Modelo Veículo</th>
+                    <th>Ano Modelo</th>
+                    <th>Tipo de Lead</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Leads?.Any() == false)
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; font-style: italic; color: #999;">Nenhum lead encontrado.</td>
+                    </tr>
+                }
 
-            <tr>
-                <td>@lead.FullName</td>
-                <td>@lead.Vehicle.Plate</td>
-                <td>@lead.Vehicle.Model</td>
-                <td>@lead.Vehicle.ModelYear</td>
-                <td>@lead.InsuranceType</td>
-                <td>
-                    <button class="status-button @buttonClass">@lead.Status</button>
-                </td>
-            </tr>
-        }
+                @foreach (var lead in Leads)
+                {
+                    var buttonClass = lead.Status == 1
+                    ? "status-pendente"
+                    : lead.Status == 2
+                    ? "status-nao-vendido"
+                    : "status-outro";
 
-    </tbody>
-</table>
+                    <tr>
+                        <td>@lead.FullName</td>
+                        <td>@lead.Vehicle.Plate</td>
+                        <td>@lead.Vehicle.Model</td>
+                        <td>@lead.Vehicle.ModelYear</td>
+                        <td>@lead.InsuranceType</td>
+                        <td>
+                            <button class="status-button @buttonClass">
+                                @lead.Status
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
 
 @code {
     private IReadOnlyList<LeadsModel> Leads = [];

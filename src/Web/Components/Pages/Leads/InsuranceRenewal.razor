@@ -1,38 +1,58 @@
 ﻿@page "/leads-renovacao"
-<h1>Listas dos leads</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listas dos Leads</title>
+</head>
+<body>
+    <h1>Listas dos Leads</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nome Cliente</th>
-            <th>Placa</th>
-            <th>Data Vigência Fim</th>
-            <th>Status</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var lead in Leads)
-        {
-            var buttonClass = lead.Status == "pendent"
-            ? "status-pendente"
-            : lead.Status == "não vendido"
-            ? "status-nao-vendido"
-            : "status-outro";
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome Cliente</th>
+                    <th>Placa</th>
+                    <th>Data Vigência Fim</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Leads?.Any() == false)
+                {
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; font-style: italic; color: #999;">Nenhum leads encontrado.</td>
+                    </tr>
+                }
+                @foreach (var lead in Leads)
+                {
+                    var buttonClass = lead.Status == "pendent"
+                    ? "status-pendente"
+                    : lead.Status == "não vendido"
+                    ? "status-nao-vendido"
+                    : "status-outro";
 
-            <tr>
-                <td>@lead.Text</td>
-                <td>@lead.Placa</td>
-                <td>@lead.Vigencia.Date</td>
-                <td>@lead.Status</td>
-                <td>
-                    <button class="status-button @buttonClass">@lead.Status</button>
-                </td>
-            </tr>
-        }
+                    <tr>
+                        <td>@lead.Text</td>
+                        <td>@lead.Placa</td>
+                        <td>@lead.Vigencia.Date</td>
+                        <td>@lead.Status</td>
+                        <td>
+                            <button class="status-button @buttonClass">
+                                @lead.Status
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
 
-    </tbody>
-</table>
 
 @code {
     private List<LeadTest> Leads { get; set; }

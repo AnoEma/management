@@ -22,6 +22,7 @@ internal static class QuotationRequestToCommandAdapter
             Brand: veiculo.MARCA,
             ManufactureYear: veiculo.ANOFABR,
             ModelYear: veiculo.ANOMODELO,
+            Model: veiculo.Dadosveiculo.ModeloVeiculo,
             Fuel: veiculo.COMBUSTIVEL,
             IsNew: veiculo.ZEROKM,
             Usage: veiculo.UTILIZACAO,
@@ -31,17 +32,7 @@ internal static class QuotationRequestToCommandAdapter
             ResidentialZipCode: veiculo.CEPRESID,
             ResidentialGarage: veiculo.GARAGRESID,
             WorkGarage: veiculo.GARAGTRAB,
-            OvernightLocation: veiculo.LOCALPERNOITE,
-            VehicleDetails: GetVehicleDetails(veiculo?.Dadosveiculo)
-        );
-    }
-
-    private static VehicleDetails GetVehicleDetails(DadosVeiculo? dadosveiculo)
-    {
-        return new VehicleDetails(
-            Brand: dadosveiculo?.MarcaVeiculo,
-            ModelYear: dadosveiculo?.AnoModelo,
-            Model: dadosveiculo?.ModeloVeiculo
+            OvernightLocation: veiculo.LOCALPERNOITE
         );
     }
 

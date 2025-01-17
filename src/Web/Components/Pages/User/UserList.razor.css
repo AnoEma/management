@@ -1,43 +1,89 @@
-﻿h1 {
-    text-align: center;
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef2f7;
+    margin: 0;
+    padding: 0;
 }
 
-    h1.title {
-        font-size: 2.5em;
-        color: #007bff;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-tr {
-    font-size: 1.5em;
-    color: #083610;
+h1 {
     text-align: center;
-    margin-bottom: 10px;
-    font-family: monospace;
+    margin: 20px 0;
+    color: #222;
+    font-size: 2rem;
+}
+
+.table-container {
+    margin: 20px auto;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+th, td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f7f9fc;
+    color: #555;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f0f4f8;
 }
 
 .button {
     padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    min-width: 80px;
-    color: #fff;
     border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    text-transform: capitalize;
+    transition: background-color 0.3s ease;
 }
 
 .edit {
-    background-color: #ffb400;
+    background-color: #4caf50;
 }
 
+    .edit:hover {
+        background-color: #388e3c;
+    }
+
 .delete {
-    background-color: #eb0707;
+    background-color: #f44336;
 }
-.td-button-edit{
+
+    .delete:hover {
+        background-color: #d32f2f;
+    }
+
+.td-button-edit, .td-button-delete {
+    text-align: center;
 }
-.td-button-delete {
-    padding-left: 0px;
-    padding-right: 100px;
+
+@media (max-width: 768px) {
+    th, td {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
 }
