@@ -14,14 +14,16 @@ public record UserCommand
     int Gender,
     int ProfileAccess,
     string User,
-    int Team
+    int Team,
+    string IdentityId
 )
 {
-    public static User CreateUserCommandToUser(UserCommand command)
+    public static UserManagement CreateUserCommandToUser(UserCommand command)
     {
         return new()
         {
             Id = command.Id,
+            IdentityId = command.IdentityId,
             FirstName = command.Name,
             LastName = command.LastName,
             Email = command.Email,
@@ -32,14 +34,15 @@ public record UserCommand
             AccessLevel = command.ProfileAccess,
             Username = command.User,
             TeamName = command.Team,
-            IsActive = true
+            IsActive = true,
         };
     }
 
-    internal static UserCommand ConvertUserToUserCommand(User value)
+    internal static UserCommand ConvertUserToUserCommand(UserManagement value)
     {
         return new(
             Id: value.Id,
+            IdentityId: value.IdentityId,
             Name: value.FirstName,
             LastName: value.LastName,
             Email: value.Email,

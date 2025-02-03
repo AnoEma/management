@@ -1,19 +1,30 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @if (!hasLoginPage)
+    {
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    }
+
 
     <main>
-        <div class="top-row px-4">
-            <button class="btn btn-primary">Sair</button>
-
-        </div>
-
-        <article class="content px-4">
+        @if (hasLoginPage)
+        {
             @Body
-        </article>
+        }
+        else
+        {
+            <div class="top-row px-4">
+                <button class="btn btn-primary">Sair</button>
+            </div>
+            <article class="content px-4">
+                @Body
+            </article>
+        }
     </main>
 </div>
 
@@ -22,3 +33,12 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    private bool hasLoginPage = false;
+
+    protected override void OnInitialized()
+    {
+        hasLoginPage = Navigation.ToBaseRelativePath(Navigation.Uri) == "login";
+    }
+}

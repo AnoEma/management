@@ -1,9 +1,15 @@
 ﻿@page "/registrar-usuario"
 @rendermode InteractiveServer
+@using Infrastructure.Repository.Users.Commands
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using Microsoft.AspNetCore.WebUtilities
+@using System.Text
 @using Web.Model
 @using Web.Services.Interfaces
 @inject NavigationManager Navigation
-
 
 <div class="container">
     <h1>Cadastro Usuario</h1>
@@ -78,21 +84,44 @@
                 </select>
             </div>
         </div>
+        <div class="field-compound">
+            <div class="field">
+                <label for="password">Senha</label>
+                <input type="text" id="password" name="password" placeholder="Senha" @bind-value="Model.Password">
+            </div>
+            <div class="field">
+                <label for="confirmPassword">Confirma senha</label>
+                <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirma senha" @bind-value="Model.ConfirmPassword">
+            </div>
+        </div>
         <button type="submit">Criar</button>
     </form>
 </div>
 
 
 @code {
+
     private IReadOnlyList<Gender> Genders = Gender.GetGenders;
     private IReadOnlyList<ProfileAccess> ProfileAccessOptions = ProfileAccess.GetProfileAccess;
     private IReadOnlyList<Team> TeamOptions = Team.GetTeams;
 
     [SupplyParameterFromForm]
     private UserModel Model { get; set; }
+    public IList<AuthenticationScheme> ExternalLogins { get; set; }
+    public string ReturnUrl { get; set; }
 
     [Inject]
     private IUserService _userService { get; set; }
+
+    [Inject]
+    private SignInManager<ManagementUser> _signInManager { get; set; }
+    [Inject]
+    private UserManager<ManagementUser> _userManager { get; set; }
+    [Inject]
+    private IUserStore<ManagementUser> _userStore { get; set; }
+
+    private IUserEmailStore<ManagementUser> _emailStore => GetEmailStore();
+
 
     protected override void OnInitialized()
     {
@@ -101,14 +130,53 @@
 
     private async Task Submit()
     {
-        await _userService.AddUserAsync(Model);
-        ReloadPage();
+        CancellationToken cancellationToken = new();
+
+        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (ExternalLogins.Count > 0)
+        {
+
+        }
+        var user = CreateUser();
+        user.FirstName = Model.Name;
+        user.LastName = Model.LastName;
+
+        await _userStore.SetUserNameAsync(user, Model.User, cancellationToken);
+        await _emailStore.SetEmailAsync(user, Model.Email, cancellationToken);
+
+        var result = await _userManager.CreateAsync(user, Model.Password);
+
+        if (result.Succeeded)
+        {
+            var userId = await _userManager.GetUserIdAsync(user);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var createUser = await _userService.AddUserAsync(Model, userId);
+
+            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+            {
+                await _userManager.ConfirmEmailAsync(user, code);
+                ReloadPage();
+                return;
+            }
+            ReloadPage();
+        }
+
+        foreach (var erro in result.Errors)
+        {
+
+        }
     }
     private void ReloadPage()
     {
         Navigation.NavigateTo("/listar-usuarios", forceLoad: true);
     }
 
+    public async Task OnGetAsync(string returnUrl)
+    {
+        ReturnUrl = returnUrl;
+        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    }
     #region Events Select
     void OnSelectTeam(ChangeEventArgs e)
     {
@@ -125,4 +193,24 @@
         Model.ProfileAccess = int.Parse(e.Value.ToString());
     }
     #endregion
+
+    private IUserEmailStore<ManagementUser> GetEmailStore()
+    {
+        if (!_userManager.SupportsUserEmail)
+        {
+            throw new NotSupportedException("The default UI requires a user store with email support.");
+        }
+        return (IUserEmailStore<ManagementUser>)_userStore;
+    }
+    private static ManagementUser CreateUser()
+    {
+        try
+        {
+            return Activator.CreateInstance<ManagementUser>();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }

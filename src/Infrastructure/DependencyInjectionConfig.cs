@@ -4,6 +4,8 @@ using Infrastructure.HttpClients.Persons;
 using Infrastructure.HttpClients.Quotations;
 using Infrastructure.HttpClients.Vehicles;
 using Infrastructure.Repository;
+using Infrastructure.Repository.Users.Commands;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,9 @@ public static class DependencyInjectionConfig
         {
             options.UseSqlServer(configuration.GetConnectionString("ManagementDataBase"));
         });
+        services
+            .AddDefaultIdentity<ManagementUser>()
+            .AddEntityFrameworkStores<InfrastructureDbContext>();
 
         services.AddRepositoty();
 

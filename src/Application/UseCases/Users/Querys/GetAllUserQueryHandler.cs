@@ -11,7 +11,7 @@ internal class GetAllUserQueryHandler(IUserRepository repository) : IGetAllUserQ
     {
         try
         {
-            Result<List<User>> result = await repository.GetAllAsync(cancellationToken);
+            Result<List<UserManagement>> result = await repository.GetAllAsync(cancellationToken);
 
             if (result.IsFailure)
             {
@@ -30,7 +30,7 @@ internal class GetAllUserQueryHandler(IUserRepository repository) : IGetAllUserQ
     {
         try
         {
-            Result<User> result = await repository.GetByIdAsync(userId, cancellationToken);
+            Result<UserManagement> result = await repository.GetByIdAsync(userId, cancellationToken);
             
             if(result.IsFailure)
             {
@@ -40,6 +40,26 @@ internal class GetAllUserQueryHandler(IUserRepository repository) : IGetAllUserQ
             UserCommand response = UserCommand.ConvertUserToUserCommand(result.Value);
 
           return Result.Success(response);
+        }
+        catch (Exception ex)
+        {
+            return Result.Failure<UserCommand>(ex.Message);
+        }
+    }
+    public async Task<Result<UserCommand>> HandleAsync(string userName, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            Result<UserManagement> result = await repository.GetByUserNameAsync(userName, cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return Result.Failure<UserCommand>(result.Error);
+            }
+
+            UserCommand response = UserCommand.ConvertUserToUserCommand(result.Value);
+
+            return Result.Success(response);
         }
         catch (Exception ex)
         {

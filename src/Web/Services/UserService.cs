@@ -11,9 +11,9 @@ internal class UserService(
     IGetAllUserQueryHandler queryHandler
 ) : IUserService
 {
-    public async Task<Result> AddUserAsync(UserModel user, CancellationToken cancellationToken = default)
+    public async Task<Result> AddUserAsync(UserModel user, string userIdentityId, CancellationToken cancellationToken = default)
     {
-        UserCommand createUserCommand = UserModel.CreateUserCommand(user);
+        UserCommand createUserCommand = UserModel.CreateUserCommand(user, userIdentityId);
 
         var response = await commandHandler.HandleAsync(createUserCommand, cancellationToken);
 
@@ -43,6 +43,18 @@ internal class UserService(
             return Result.Failure<UserModel>(result.Error);
         }
         UserModel response = UserModel.CreateUserModel(result.Value);
+
+        return Result.Success(response);
+    }
+    public async Task<Result<UserLoginModel>> GetUserByUserNameAsync(string userName, CancellationToken cancellationToken = default)
+    {
+        Result<UserCommand> result = await queryHandler.HandleAsync(userName, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure<UserLoginModel>(result.Error);
+        }
+        UserLoginModel response = new(result.Value.IdentityId);
 
         return Result.Success(response);
     }

@@ -1,4 +1,5 @@
 ﻿using Application.UseCases.Users.Commands;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Model;
 
@@ -16,7 +17,18 @@ public class UserModel
     public string User { get; set; }
     public int Team { get; set; }
 
-    internal static UserCommand CreateUserCommand(UserModel user)
+    [Required]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password")]
+    public string Password { get; set; }
+
+    [DataType(DataType.Password)]
+    [Display(Name = "Confirm password")]
+    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+    public string ConfirmPassword { get; set; }
+
+    internal static UserCommand CreateUserCommand(UserModel user, string userIdentityId = null)
     {
         return new(
             Id: user.Id,
@@ -29,7 +41,8 @@ public class UserModel
             Gender: user.Gender,
             ProfileAccess: user.ProfileAccess,
             User: user.User,
-            Team: user.Team
+            Team: user.Team,
+            IdentityId: userIdentityId
         );
     }
 
@@ -51,3 +64,14 @@ public class UserModel
         };
     }
 }
+
+public class LoginModel
+{
+    public string User { get; set; }
+    public string Password { get; set; }
+}
+
+public record UserLoginModel
+(
+    string IdentityId
+);

@@ -1,6 +1,8 @@
-﻿using Infrastructure.Repository.Leads;
+﻿using Infrastructure.DataConfiguration;
+using Infrastructure.Repository.Leads;
 using Infrastructure.Repository.SolicitationLeads.Querys;
 using Infrastructure.Repository.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Repository;

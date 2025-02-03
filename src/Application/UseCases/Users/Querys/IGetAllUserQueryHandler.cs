@@ -7,4 +7,5 @@ public interface IGetAllUserQueryHandler
 {
     Task<Result<IReadOnlyList<GetAllUserQuery>>> HandleAsync(CancellationToken cancellationToken = default);
     Task<Result<UserCommand>> HandleAsync(int userId, CancellationToken cancellationToken = default);
+    Task<Result<UserCommand>> HandleAsync(string userName, CancellationToken cancellationToken = default);
 }

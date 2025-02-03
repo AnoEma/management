@@ -12,7 +12,7 @@ public record GetAllUserQuery
     bool IsActive
 )
 {
-    internal static IReadOnlyList<GetAllUserQuery> CreateUserQueryList(List<User> value)
+    internal static IReadOnlyList<GetAllUserQuery> CreateUserQueryList(List<UserManagement> value)
     {
         List<GetAllUserQuery> response = [];
 

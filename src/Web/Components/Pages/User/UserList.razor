@@ -25,7 +25,7 @@
                     <th>Usuário</th>
                     <th>Equipe</th>
                     <th>Ativo</th>
-                    <th>Ações</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -36,20 +36,22 @@
                         <td colspan="6" style="text-align: center; padding: 20px; font-style: italic; color: #999;">Nenhum usuário encontrado.</td>
                     </tr>
                 }
-
-                @foreach (var item in UsersList)
+                else
                 {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.Name</td>
-                        <td>@item.User</td>
-                        <td>@item.Team</td>
-                        <td>@item.IsActive</td>
-                        <td class="td-button-edit">
-                            <button class="button edit" @onclick="() => OnEditUser(item.Id)">Editar</button>
-                            <button class="button delete" @onclick="() => OnDeleteUser(item.Id)">Excluir</button>
-                        </td>
-                    </tr>
+                    @foreach (var item in UsersList)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.User</td>
+                            <td>@item.Team</td>
+                            <td>@item.IsActive</td>
+                            <td class="td-button-edit">
+                                <button class="button edit" @onclick="() => OnEditUser(item.Id)">Editar</button>
+                                <button class="button delete" @onclick="() => OnDeleteUser(item.Id)">Excluir</button>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
@@ -68,14 +70,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        CancellationToken cancellationToken = new CancellationToken();
+        CancellationToken cancellationToken = new();
         var result = await _userService.GetUsersAsync(cancellationToken);
 
-        if (result.IsFailure)
+        if (result.IsSuccess)
         {
-            return;
+            UsersList = result.Value;
         }
-        UsersList = result.Value;
     }
 
     private async Task OnDeleteUser(int userId)

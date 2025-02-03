@@ -22,7 +22,7 @@ internal class UserCommandHandler(IUserRepository repository) : IUserCommandHand
     {
         try
         {
-            User createUser = UserCommand.CreateUserCommandToUser(command);
+            UserManagement createUser = UserCommand.CreateUserCommandToUser(command);
 
             Result<int> result = await repository.SaveAsync(createUser, cancellationToken);
 
@@ -33,9 +33,9 @@ internal class UserCommandHandler(IUserRepository repository) : IUserCommandHand
 
             return Result.Success(result);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            return Result.Failure<int>(error: ex.Message);
         }
     }
 
@@ -43,7 +43,7 @@ internal class UserCommandHandler(IUserRepository repository) : IUserCommandHand
     {
         try
         {
-            User createUser = UserCommand.CreateUserCommandToUser(command);
+            UserManagement createUser = UserCommand.CreateUserCommandToUser(command);
 
             var result = await repository.UpdateAsync(createUser, cancellationToken);
 

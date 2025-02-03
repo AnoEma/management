@@ -7,35 +7,44 @@ namespace Infrastructure.Repository.Users;
 
 internal class UserRepository(InfrastructureDbContext context) : IUserRepository
 {
-    public async Task<Result<List<User>>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<Result<List<UserManagement>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        Result<List<User>> result = await context
-            .Users
+        Result<List<UserManagement>> result = await context
+            .UserManagements
             .AsNoTracking()
             .ToListAsync(cancellationToken);
 
         return result;
     }
 
-    public async Task<Result<User>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<UserManagement>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        Result<User> result = await context
-            .Users
+        Result<UserManagement> result = await context
+            .UserManagements
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         return result;
     }
 
-    public async Task<Result<int>> SaveAsync(User command, CancellationToken cancellationToken = default)
+    public async Task<Result<UserManagement>> GetByUserNameAsync(string userName, CancellationToken cancellationToken = default)
     {
-        await context.Users.AddAsync(command, cancellationToken);
+        Result<UserManagement> result = await context
+            .UserManagements
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Username == userName, cancellationToken);
+        return result;
+    }
+
+    public async Task<Result<int>> SaveAsync(UserManagement command, CancellationToken cancellationToken = default)
+    {
+        await context.UserManagements.AddAsync(command, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
 
         return Result.Success(command.Id);
     }
     public async Task<Result> DeleteAsync(int userId, CancellationToken cancellationToken = default)
     {
-        await context.Users
+        await context.UserManagements
                    .Where(x => x.Id == userId)
                    .ExecuteUpdateAsync(update =>
                         update
@@ -50,10 +59,10 @@ internal class UserRepository(InfrastructureDbContext context) : IUserRepository
         return Result.Success();
     }
 
-    public async Task<Result> UpdateAsync(User command, CancellationToken cancellationToken = default)
+    public async Task<Result> UpdateAsync(UserManagement command, CancellationToken cancellationToken = default)
     {
         #region Update User
-        await context.Users
+        await context.UserManagements
           .Where(x => x.Id == command.Id)
           .ExecuteUpdateAsync(update =>
             update

@@ -1,23 +1,79 @@
-﻿
-@page "/login"
+﻿@page "/login"
+@rendermode InteractiveServer
+@inject SignInManager<ManagementUser> _signInManager
+@inject UserManager<ManagementUser> _userManager
+@inject IUserService _userService
+@using Infrastructure.Repository.Users.Commands
+@using Microsoft.AspNetCore.Identity
+@using Web.Model
+@using Web.Services.Interfaces
+@inject NavigationManager Navigation
+
+
 <PageTitle>Login</PageTitle>
 
 <div class="login-container">
     <h2>Login</h2>
-    <form>
+    <form method="post" @onsubmit="HandleLogin" @formname="user-logon">
         <div>
             <label for="user">Usuário</label>
-            <input type="text" id="user" name="user" required>
+            <input type="text" id="user" name="user" @bind-value="LoginModel.User">
+
         </div>
         <div>
             <label for="password">Senha</label>
-            <input type="password" id="password" required>
+            <input type="password" id="password" name="password" @bind-value="LoginModel.Password">
         </div>
         <button type="submit">Entra</button>
     </form>
 </div>
 
 
-@code {
 
+@code {
+    private LoginModel LoginModel { get; set; } = new();
+
+    private async Task HandleLogin()
+    {
+        try
+        {
+            CancellationToken cancellationToken = new();
+
+            var user = await _userService.GetUserByUserNameAsync(LoginModel.User, cancellationToken);
+
+            if (user.IsFailure || string.IsNullOrWhiteSpace(user.Value.IdentityId))
+            {
+                Navigation.NavigateTo("/login", forceLoad: true);
+                return;
+            }
+
+            ManagementUser userIdentity = await _userManager.FindByIdAsync(user.Value.IdentityId);
+
+            if (userIdentity is null ||
+            !await _userManager.CheckPasswordAsync(userIdentity, LoginModel.Password))
+            {
+                Navigation.NavigateTo("/login", forceLoad: true);
+                return;
+            }
+
+            var result = _signInManager.CheckPasswordSignInAsync(userIdentity, LoginModel.Password, false);
+
+            //var test = _signInManager.SignInAsync(userIdentity, true);
+
+            if (result.IsCompleted)
+            {
+                Navigation.NavigateTo("/");
+            }
+        }
+        catch (Exception)
+        {
+            Navigation.NavigateTo("/login", forceLoad: true);
+        }
+    }
+
+    private async Task HandleLogout()
+    {
+        await _signInManager.SignOutAsync();
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
 }
