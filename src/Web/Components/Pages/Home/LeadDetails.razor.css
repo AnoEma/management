@@ -1,27 +1,6 @@
-﻿.lead-details-container {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    max-width: 800px;
-    margin: auto;
-}
-
-.lead-card {
+﻿.lead-info {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-}
-
-.lead-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
 }
 
 .profile-image {
@@ -35,32 +14,42 @@
 .personal-info {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 2px;
+    padding-left: 31px;
 }
 
-.vehicle-info {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    margin-top: 20px;
-}
-
-.comment-info {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    margin-top: 20px;
-}
-
-h2, h3 {
-    color: #6a1b9a;
+h2 {
     margin-bottom: 10px;
+    text-align: center;
 }
+
 
 p {
-    margin: 5px 0;
+    margin: 2px;
     font-size: 14px;
     color: #333;
+}
+
+
+.lead-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.lead-card,
+.vehicle-info,
+.comment-info {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.transmission-info {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

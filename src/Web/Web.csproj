@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\ListCustomer\ListRenovacao.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Components\Pages\LoginPage\Login.razor.css" />
   </ItemGroup>
 

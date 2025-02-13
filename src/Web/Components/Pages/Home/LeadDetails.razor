@@ -1,15 +1,14 @@
 ﻿@page "/lead/detalhes/{LeadId:int}"
 
 <div class="lead-details">
-    <h2>Detalhes do Lead</h2>
 
     @if (LeadDetail != null)
     {
         <div class="lead-card">
             <div class="lead-info">
-                <img src="" alt="@LeadDetail.Name" class="profile-image" />
+                <img src="/images/person/senhora.jpeg" alt="@LeadDetail.Name" class="profile-image" />
                 <div class="personal-info">
-                    <h3>@LeadDetail.Name</h3>
+                    <p><strong>Nome:</strong> @LeadDetail.Name</p>
                     <p><strong>Email:</strong> @LeadDetail.Email</p>
                     <p><strong>Telefone:</strong> @LeadDetail.Phone</p>
                     <p><strong>Data de Nascimento:</strong> @LeadDetail.BirthDate.ToString("dd/MM/yyyy")</p>
@@ -23,8 +22,32 @@
             <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
             <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
         </div>
+
         <div class="comment-info">
             <h3>Comentario</h3>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+        </div>
+
+        <div class="transmission-info">
+            <h3>Dados de seguro</h3>
+            <p></p>
+        </div>
+        <div class="comment-info">
+            <h3>Comentario</h3>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+            <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+            <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+            <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+        </div>
+        <div class="transmission-info">
+            <h3>transmissão</h3>
             <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
             <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
             <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
