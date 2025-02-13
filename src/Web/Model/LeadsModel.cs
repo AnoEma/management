@@ -25,7 +25,7 @@ public class LeadsModel
                 Vehicle = new()
                 {
                     Model = $"{item.Vehicle.Brand} {item.Vehicle.Model}",
-                    Plate = "XXX-CCC",
+                    Plate = item.Vehicle.Plate,
                     ModelYear = item.Vehicle.ModelYear
                 }
             });

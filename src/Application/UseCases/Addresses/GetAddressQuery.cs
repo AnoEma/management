@@ -1,6 +1,6 @@
 ﻿namespace Application.UseCases.Addresses;
 
-public record GetAdressQuery
+public record GetAddressQuery
 (
     string ZipCode
 );

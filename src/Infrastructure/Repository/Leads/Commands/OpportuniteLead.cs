@@ -3,8 +3,8 @@
 public record OpportuniteLead
 {
     public int Id { get; set; }
-    public OpportuniteStatus Status { get; set; }
-    public OpportuniteType Type { get; set; }
+    public byte Status { get; set; }
+    public byte Type { get; set; }
     public DateTime CreateAt { get; set; }
     public DateTime StartLead { get; set; }
     public int InsuredId { get; set; }
@@ -13,27 +13,27 @@ public record OpportuniteLead
     public DateTime? CanceledDate { get; set; } = null;
     public virtual Insured Insured { get; set; }
 
-    public void SoldLead()
-    {
-        SaleDate = DateTime.Now;
-        Status = OpportuniteStatus.Sold;
-    }
+    //public void SoldLead()
+    //{
+    //    SaleDate = DateTime.Now;
+    //    Status = (byte)OpportuniteStatus.Sold;
+    //}
 
-    public void IssuedLead()
-    {
-        IssueDate = DateTime.Now;
-        Status = OpportuniteStatus.Issued;
-    }
+    //public void IssuedLead()
+    //{
+    //    IssueDate = DateTime.Now;
+    //    Status = (byte)OpportuniteStatus.Issued;
+    //}
 
-    public void CanceledLead()
-    {
-        CanceledDate = DateTime.Now;
-        Status = OpportuniteStatus.Canceled;
-    }
+    //public void CanceledLead()
+    //{
+    //    CanceledDate = DateTime.Now;
+    //    Status = (byte)OpportuniteStatus.Canceled;
+    //}
 
-    public void AttendedLead()
-    {
-        StartLead = DateTime.Now;
-        Status = OpportuniteStatus.Attended;
-    }
+    //public void AttendedLead()
+    //{
+    //    StartLead = DateTime.Now;
+    //    Status = (byte)OpportuniteStatus.Attended;
+    //}
 }

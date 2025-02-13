@@ -2,7 +2,7 @@
 
 namespace Application.UseCases.Addresses.Models;
 
-public record GetAdressResponse
+public record GetAddressResponse
 (
 string Street,
 string Number,
@@ -14,7 +14,7 @@ string PostalCode,
 string StreetType
 )
 {
-    public static GetAdressResponse CreateAddressResponse(AddressResponse value)
+    public static GetAddressResponse CreateAddressResponse(AddressResponse value)
     {
         return new(
             Street: value.Logradouro,

@@ -25,13 +25,13 @@ public static class AddressEndpoints
     }
 
     private static async Task<IResult> GetAddress(
-        [FromServices] IGetAdressQueryHandler queryHandler,
+        [FromServices] IGetAddressQueryHandler queryHandler,
         [FromRoute] string zipCode,
         CancellationToken cancellationToken)
     {
-        GetAdressQuery query = new(zipCode);
+        GetAddressQuery query = new(zipCode);
 
-        Monad.Result<GetAdressResponse> result = await queryHandler.HandlerAsync(query, cancellationToken);
+        Monad.Result<GetAddressResponse> result = await queryHandler.HandlerAsync(query, cancellationToken);
 
         return result.ToActionResult();
     }

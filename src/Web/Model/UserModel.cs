@@ -11,7 +11,7 @@ public class UserModel
     public string Email { get; set; }
     public string Phone { get; set; }
     public string Cpf { get; set; }
-    public DateTime BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; } = null;
     public int Gender { get; set; }
     public int ProfileAccess { get; set; }
     public string User { get; set; }
@@ -37,7 +37,7 @@ public class UserModel
             Email: user.Email,
             Phone: user.Phone,
             Cpf: user.Cpf,
-            user.BirthDate.ToString("yyyy-MM-dd"),
+            user.BirthDate?.ToString("yyyy-MM-dd"),
             Gender: user.Gender,
             ProfileAccess: user.ProfileAccess,
             User: user.User,

@@ -1,6 +1,6 @@
-﻿namespace Infrastructure.Repository.Leads.Commands;
+﻿namespace Application.Model;
 
-public enum OpportuniteStatus : byte
+public enum OpportuniteStatus: byte
 {
     Pending = 1,
     Attended = 2,

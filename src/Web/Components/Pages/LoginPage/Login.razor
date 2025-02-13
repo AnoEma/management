@@ -1,6 +1,6 @@
 ﻿@page "/login"
 @rendermode InteractiveServer
-@inject SignInManager<ManagementUser> _signInManager
+@* @inject SignInManager<ManagementUser> _signInManager *@
 @inject UserManager<ManagementUser> _userManager
 @inject IUserService _userService
 @using Infrastructure.Repository.Users.Commands
@@ -56,14 +56,16 @@
                 return;
             }
 
-            var result = _signInManager.CheckPasswordSignInAsync(userIdentity, LoginModel.Password, false);
+            // var result = _signInManager.CheckPasswordSignInAsync(userIdentity, LoginModel.Password, false);
 
-            //var test = _signInManager.SignInAsync(userIdentity, true);
+            // //var test = _signInManager.SignInAsync(userIdentity, true);
 
-            if (result.IsCompleted)
-            {
-                Navigation.NavigateTo("/");
-            }
+            // if (!result.IsCompleted)
+            // {
+            //     Navigation.NavigateTo("/login", forceLoad: true);
+            //     return;
+            // }
+            Navigation.NavigateTo("/");
         }
         catch (Exception)
         {
@@ -73,7 +75,7 @@
 
     private async Task HandleLogout()
     {
-        await _signInManager.SignOutAsync();
+        // await _signInManager.SignOutAsync();
         Navigation.NavigateTo("/login", forceLoad: true);
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentitySchema : Migration
+    public partial class CreateIdentitySchema1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,35 +77,18 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Driver17To25s",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Exists17To25 = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Driver17To25s", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Insureds",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonType = table.Column<int>(type: "int", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaritalStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneAreaCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RelationshipToOwner = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Contact = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,6 +139,19 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserManagements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VehicleUsageProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Usage = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleUsageProfiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -336,29 +332,20 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DriverPs",
+                name: "Driver",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaritalStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LivesWithInsured = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RelationshipToInsured = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Driver17To25Id = table.Column<int>(type: "int", nullable: true)
+                    BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DriverPs", x => x.Id);
+                    table.PrimaryKey("PK_Driver", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DriverPs_Driver17To25s_Driver17To25Id",
-                        column: x => x.Driver17To25Id,
-                        principalTable: "Driver17To25s",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DriverPs_SolicitationLeads_Id",
+                        name: "FK_Driver_SolicitationLeads_Id",
                         column: x => x.Id,
                         principalTable: "SolicitationLeads",
                         principalColumn: "Id",
@@ -402,10 +389,9 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonType = table.Column<int>(type: "int", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MaritalStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthDate = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -454,11 +440,8 @@ namespace Infrastructure.Migrations
                     Plate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Usage = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OvernightZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CirculationZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ResidentialZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResidentialGarage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WorkGarage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OvernightLocation = table.Column<int>(type: "int", nullable: false)
+                    Chassi = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -467,24 +450,6 @@ namespace Infrastructure.Migrations
                         name: "FK_Vehicles_SolicitationLeads_Id",
                         column: x => x.Id,
                         principalTable: "SolicitationLeads",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VehicleUsageProfiles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Usage = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VehicleUsageProfiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VehicleUsageProfiles_Vehicles_Id",
-                        column: x => x.Id,
-                        principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -529,11 +494,6 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DriverPs_Driver17To25Id",
-                table: "DriverPs",
-                column: "Driver17To25Id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OpportuniteLeads_InsuredId",
                 table: "OpportuniteLeads",
                 column: "InsuredId");
@@ -574,7 +534,7 @@ namespace Infrastructure.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "DriverPs");
+                name: "Driver");
 
             migrationBuilder.DropTable(
                 name: "OpportuniteLeads");
@@ -592,6 +552,9 @@ namespace Infrastructure.Migrations
                 name: "UserManagements");
 
             migrationBuilder.DropTable(
+                name: "Vehicles");
+
+            migrationBuilder.DropTable(
                 name: "VehicleUsageProfiles");
 
             migrationBuilder.DropTable(
@@ -601,9 +564,6 @@ namespace Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Driver17To25s");
-
-            migrationBuilder.DropTable(
                 name: "Insureds");
 
             migrationBuilder.DropTable(
@@ -611,9 +571,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CreditPayment");
-
-            migrationBuilder.DropTable(
-                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "SolicitationLeads");

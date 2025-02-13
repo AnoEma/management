@@ -4,81 +4,52 @@ public record CreateSolicitationLeadCommand
 (
 int InsuranceType,
 Insured Insured,
-Owner Owner,
-DriverP PrimaryDriver,
-Vehicle Vehicle
+Driver Driver,
+Vehicle Vehicle,
+Address Address
 );
 
 
 public record Insured
 (
 string Name,
-string PersonType,
+int PersonType,
 string Cpf,
 string BirthDate,
 string Gender,
-string MaritalStatus,
 string Email,
-string PhoneAreaCode,
-string PhoneNumber,
-string RelationshipToOwner,
-string Contact
+string PhoneNumber
 );
 
-public record Owner
+
+public record Driver
 (
-string Name,
-string PersonType,
 string Cpf,
+string Name,
 string Gender,
-string MaritalStatus,
 string BirthDate
-);
-
-public record DriverP
-(
-string Cpf,
-string Name,
-string Gender,
-string BirthDate,
-string MaritalStatus,
-string LivesWithInsured,
-string RelationshipToInsured,
-Driver17To25 Driver17To25
-);
-
-public record Driver17To25
-(
-    int Exists17To25
 );
 
 public record Vehicle
 (
-int CodCar,
 string Brand,
-string ManufactureYear,
 string ModelYear,
 string Model,
-string Fuel,
 string IsNew,
 string Usage,
-VehicleUsageProfile UsageProfile,
 string OvernightZipCode,
-string CirculationZipCode,
 string ResidentialZipCode,
-string ResidentialGarage,
-string WorkGarage,
-int OvernightLocation
+string Plate,
+string Chassi
 );
 
-public record VehicleUsageProfile
+public record Address
 (
-int Usage
-);
-
-public record VehicleDetails
-(
-string? Brand,
-string? ModelYear,
-string? Model
+string Street,
+string Number,
+string Neighborhood,
+string City,
+string State,
+string ZipCode,
+string? Complement
 );

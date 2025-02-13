@@ -29,13 +29,13 @@ public record Solicitation
         return new(
                         Id: item.Id,
                         GuidSolicitation: item.GuidSolicitation,
-                        Status: 1,
+                        Status: item.Status,
                         CreatedAt: item.CreatedAt,
                         Opportunite: new
                         (
                             Id: item.OpportuniteLead.Id,
-                            Status: 1,
-                            Type: 1,
+                            Status: item.OpportuniteLead.Status,
+                            Type: item.OpportuniteLead.Type,
                             SaleDate: item.OpportuniteLead.SaleDate,
                             IssueDate: item.OpportuniteLead.IssueDate,
                             CanceledDate: item.OpportuniteLead.CanceledDate,
@@ -44,12 +44,9 @@ public record Solicitation
                                 Id: item.OpportuniteLead.Insured.Id,
                                 Name: item.OpportuniteLead.Insured.Name,
                                 Cpf: item.OpportuniteLead.Insured.Cpf,
-                                BirthDate: "",
-                                Gender: "",
-                                MaritalStatus: item.OpportuniteLead.Insured.MaritalStatus,
-                                PhoneAreaCode: item.OpportuniteLead.Insured.PhoneAreaCode,
-                                PhoneNumber: item.OpportuniteLead.Insured.Contact
-
+                                BirthDate: item.OpportuniteLead.Insured.BirthDate,
+                                Gender: item.OpportuniteLead.Insured.Gender,
+                                PhoneNumber: item.OpportuniteLead.Insured.PhoneNumber
                             )
                         ),
                         Vehicle: new
@@ -85,8 +82,6 @@ public record InsuredLead(
     string Cpf,
     string BirthDate,
     string Gender,
-    string MaritalStatus,
-    string PhoneAreaCode,
     string PhoneNumber
 );
 

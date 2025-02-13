@@ -16,8 +16,7 @@ public class InfrastructureDbContext : IdentityDbContext<ManagementUser>
     public DbSet<PaymentData> PaymentData { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Owner> Owner { get; set; }
-    public DbSet<DriverPs> DriverPs { get; set; }
-    public DbSet<Driver17To25> Driver17To25s { get; set; }
+    public DbSet<Driver> Driver { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<VehicleUsageProfile> VehicleUsageProfiles { get; set; }
     public DbSet<OpportuniteLead> OpportuniteLeads { get; set; }

@@ -27,9 +27,9 @@ public class SolicitationLeadConfiguration : IEntityTypeConfiguration<Solicitati
            .WithOne()
            .HasForeignKey<Address>(a => a.Id);
 
-        builder.HasOne(s => s.PrimaryDriver)
+        builder.HasOne(s => s.Driver)
            .WithOne()
-           .HasForeignKey<DriverPs>(p => p.Id);
+           .HasForeignKey<Driver>(p => p.Id);
 
         builder.HasOne(s => s.Transmission)
                .WithOne()

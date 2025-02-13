@@ -107,23 +107,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("CreditPayment");
                 });
 
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Driver17To25", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Exists17To25")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Driver17To25s");
-                });
-
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.DriverPs", b =>
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Driver", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -134,29 +118,15 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Cpf")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Driver17To25Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LivesWithInsured")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MaritalStatus")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RelationshipToInsured")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Driver17To25Id");
-
-                    b.ToTable("DriverPs");
+                    b.ToTable("Driver");
                 });
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Insured", b =>
@@ -170,9 +140,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("BirthDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Contact")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Cpf")
                         .HasColumnType("nvarchar(max)");
 
@@ -182,22 +149,13 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaritalStatus")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PersonType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneAreaCode")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PersonType")
+                        .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RelationshipToOwner")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -255,14 +213,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MaritalStatus")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PersonType")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PersonType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -359,7 +314,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CirculationZipCode")
+                    b.Property<string>("Chassi")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IsNew")
@@ -371,25 +326,16 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ModelYear")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OvernightLocation")
-                        .HasColumnType("int");
-
                     b.Property<string>("OvernightZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Plate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ResidentialGarage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ResidentialZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Usage")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkGarage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -400,7 +346,10 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Usage")
                         .HasColumnType("int");
@@ -704,19 +653,13 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.DriverPs", b =>
+            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Driver", b =>
                 {
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Driver17To25", "Driver17To25")
-                        .WithMany()
-                        .HasForeignKey("Driver17To25Id");
-
                     b.HasOne("Infrastructure.Repository.Leads.Commands.SolicitationLead", null)
-                        .WithOne("PrimaryDriver")
-                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.DriverPs", "Id")
+                        .WithOne("Driver")
+                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.Driver", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Driver17To25");
                 });
 
             modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.OpportuniteLead", b =>
@@ -778,15 +721,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", b =>
-                {
-                    b.HasOne("Infrastructure.Repository.Leads.Commands.Vehicle", null)
-                        .WithOne("UsageProfile")
-                        .HasForeignKey("Infrastructure.Repository.Leads.Commands.VehicleUsageProfile", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -844,20 +778,15 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Comment");
 
+                    b.Navigation("Driver");
+
                     b.Navigation("OpportuniteLead");
 
                     b.Navigation("Owner");
 
-                    b.Navigation("PrimaryDriver");
-
                     b.Navigation("Transmission");
 
                     b.Navigation("Vehicle");
-                });
-
-            modelBuilder.Entity("Infrastructure.Repository.Leads.Commands.Vehicle", b =>
-                {
-                    b.Navigation("UsageProfile");
                 });
 #pragma warning restore 612, 618
         }

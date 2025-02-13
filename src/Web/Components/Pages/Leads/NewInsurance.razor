@@ -1,12 +1,53 @@
 ﻿@page "/"
 @using Web.Model
+@inject NavigationManager Navigation
 @using Web.Services.Interfaces
+@rendermode InteractiveServer
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listas dos Leads</title>
+    <style>
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        tr {
+            transition: background-color 0.3s;
+        }
+
+            tr.clickable:hover {
+                background-color: #f0f0f0;
+                cursor: pointer;
+            }
+
+        .status-pendente {
+            color: orange;
+        }
+
+        .status-nao-vendido {
+            color: red;
+        }
+
+        .status-outro {
+            color: green;
+        }
+    </style>
 </head>
 <body>
     <h1>Listas dos Leads</h1>
@@ -39,24 +80,22 @@
                     ? "status-nao-vendido"
                     : "status-outro";
 
-                    <tr>
+                    <tr @onclick="() => handleClick(lead.Id)" style="cursor: pointer;">
                         <td>@lead.FullName</td>
                         <td>@lead.Vehicle.Plate</td>
                         <td>@lead.Vehicle.Model</td>
                         <td>@lead.Vehicle.ModelYear</td>
                         <td>@lead.InsuranceType</td>
-                        <td>
-                            <button class="status-button @buttonClass">
-                                @lead.Status
-                            </button>
-                        </td>
+                        <td class="@buttonClass">@lead.Status</td>
                     </tr>
+
                 }
             </tbody>
         </table>
     </div>
 </body>
 </html>
+
 
 
 @code {
@@ -77,5 +116,10 @@
         }
 
         Leads = result.Value;
+    }
+
+    void handleClick(int leadId)
+    {
+        Navigation.NavigateTo($"/lead/detalhes/{leadId}", forceLoad: true);
     }
 }

@@ -14,6 +14,21 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.container-field {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container-field2 {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 h1 {
     text-align: center;
     color: #333;
@@ -26,17 +41,15 @@ form {
 
 .field-compound {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: 10px;
 }
 
     .field-compound .field {
-        flex: 1;
-        margin-right: 10px;
+        flex: 1 1 calc(50% - 10px);
+        margin-right: 0;
     }
-
-        .field-compound .field:last-child {
-            margin-right: 0;
-        }
 
 label {
     font-weight: bold;
@@ -57,8 +70,32 @@ input[type="date"] {
     font-size: 16px;
 }
 
+select {
+    width: 30%;
+    padding: 10px;
+    margin: 5px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.field-plate,
+.field-ZipCode {
+    flex: 1 1 calc(25% - 10px);
+    width: 13%;
+}
+
+.field-IsNew,
+.field-ModelYear {
+    flex: 1 1 calc(30% - 10px);
+    margin-right: 0;
+}
+
 input[type="submit"] {
-    width: 150px; /* Define uma largura fixa para o botão */
+    width: 100%;
+    max-width: 150px;
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -66,10 +103,40 @@ input[type="submit"] {
     border-radius: 4px;
     cursor: pointer;
     font-size: 18px;
-    align-self: center; /* Centraliza o botão no form */
+    align-self: center;
     margin-top: 20px;
 }
 
     input[type="submit"]:hover {
         background-color: #45a049;
     }
+
+@media (max-width: 768px) {
+    .field-compound {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .field-plate,
+    .field-ModelYear,
+    .field-IsNew,
+    .field-ZipCode {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        display: inline-block;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+    }
+}

@@ -7,9 +7,9 @@ public class SolicitationLead
     public int Id { get; set; }
     public Guid GuidSolicitation { get; set; }
     public string QuotationId { get; set; }
-    public SolicitationStatus Status { get; set; }
+    public byte Status { get; set; }
     public virtual Owner Owner { get; set; }
-    public virtual DriverPs PrimaryDriver { get; set; }
+    public virtual Driver Driver { get; set; }
     public virtual Vehicle Vehicle { get; set; }
     public virtual Comment Comment { get; set; }
     public DateTime CreatedAt { get; set; }

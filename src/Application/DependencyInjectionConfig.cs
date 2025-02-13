@@ -5,10 +5,6 @@ using Application.UseCases.SolicitationLeads.Querys;
 using Application.UseCases.Users.Commands;
 using Application.UseCases.Users.Querys;
 using Application.UseCases.Vehicles;
-using Infrastructure.Repository.Users;
-using Infrastructure.Repository.Users.Commands;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -21,7 +17,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IGetPersonQueryHandler, GetPersonQueryHandler>();
         services.AddScoped<IGetVehicleQueryHandler, GetVehicleQueryHandler>();
         services.AddScoped<ISolicitationLeadQueryHandler, SolicitationLeadQueryHandler>();
-        services.AddScoped<IGetAdressQueryHandler, GetAdressQueryHandler>();
+        services.AddScoped<IGetAddressQueryHandler, GetAddressQueryHandler>();
         services.AddScoped<IGetAllUserQueryHandler, GetAllUserQueryHandler>();
 
         //Command Handlers
