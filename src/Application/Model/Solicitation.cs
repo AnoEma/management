@@ -1,4 +1,7 @@
 ﻿using Infrastructure.Repository.Leads.Commands;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO;
+using System.Reflection.Emit;
 
 namespace Application.Model;
 
@@ -9,7 +12,8 @@ public record Solicitation
     byte Status,
     DateTime CreatedAt,
     Opportunite Opportunite,
-    Vehicle Vehicle
+    Vehicle Vehicle,
+    Address Address
 )
 {
     public static IReadOnlyList<Solicitation> CreateSolicitationsModel(List<SolicitationLead> value)
@@ -46,7 +50,8 @@ public record Solicitation
                                 Cpf: item.OpportuniteLead.Insured.Cpf,
                                 BirthDate: item.OpportuniteLead.Insured.BirthDate,
                                 Gender: item.OpportuniteLead.Insured.Gender,
-                                PhoneNumber: item.OpportuniteLead.Insured.PhoneNumber
+                                PhoneNumber: item.OpportuniteLead.Insured.PhoneNumber,
+                                Email: item.OpportuniteLead.Insured.Email
                             )
                         ),
                         Vehicle: new
@@ -56,6 +61,14 @@ public record Solicitation
                             ModelYear: item.Vehicle.ModelYear,
                             Model: item.Vehicle.Model,
                             Plate: item.Vehicle.Plate
+                        ),
+                        Address: new
+                        (
+                            Street: item.Address.Street,
+                            Neighborhood: item.Address.Neighborhood,
+                            State: item.Address.State,
+                            ZipCode: item.Address.ZipCode,
+                            Number: item.Address.Number
                         )
         );
     }
@@ -82,7 +95,8 @@ public record InsuredLead(
     string Cpf,
     string BirthDate,
     string Gender,
-    string PhoneNumber
+    string PhoneNumber,
+    string Email
 );
 
 public record Vehicle(
@@ -91,4 +105,12 @@ public record Vehicle(
     string ModelYear,
     string Model,
     string Plate
+);
+
+public record Address(
+string Street,
+string Neighborhood,
+string State,
+string ZipCode,
+string Number
 );

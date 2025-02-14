@@ -40,16 +40,10 @@ p {
 
 .lead-card,
 .vehicle-info,
-.comment-info {
+.address-info {
     background-color: #fff;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.transmission-info {
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}

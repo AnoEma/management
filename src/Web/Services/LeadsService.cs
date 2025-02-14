@@ -46,6 +46,19 @@ internal class LeadsService(
         return Result.Success(response);
     }
 
+    public async Task<Result<LeadsModel>> GetLeadById(int id, CancellationToken cancellationToken)
+    {
+        Result<Solicitation> result = await queryHandler.HandlerByLeadIdAsync(id, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure<LeadsModel>(result.Error);
+        }
+        LeadsModel response = LeadsModel.CreateLeadsModel(result.Value);
+
+        return Result.Success(response);
+    }
+
     public async Task<Result<GetAddressResponse>> GetAddress(string zipCode, CancellationToken cancellationToken)
     {
         GetAddressQuery addressQuery = new(zipCode);

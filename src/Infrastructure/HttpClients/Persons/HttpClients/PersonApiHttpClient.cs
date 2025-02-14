@@ -15,7 +15,7 @@ public class PersonApiHttpClient(HttpClient httpClient) : IPersonApiHttpClient
 
             httpResponse.EnsureSuccessStatusCode();
 
-            PersonResponse? response = await httpResponse.Content.ReadFromJsonAsync<PersonResponse>(cancellationToken);
+            PersonResponse response = await httpResponse.Content.ReadFromJsonAsync<PersonResponse>(cancellationToken);
 
             return Result.Success(response);
         }
