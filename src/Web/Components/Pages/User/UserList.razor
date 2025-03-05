@@ -5,59 +5,49 @@
 @rendermode InteractiveServer
 @inject NavigationManager Navigation
 
+<h1>Lista dos Usuários</h1>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista dos Usuários</title>
-</head>
-<body>
-    <h1>Lista dos Usuários</h1>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Usuário</th>
+                <th>Equipe</th>
+                <th>Ativo</th>
+                <th></th>
+            </tr>
+        </thead>
 
-    <div class="table-container">
-        <table>
-            <thead>
+        <tbody>
+            @if (UsersList?.Any() == false)
+            {
                 <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Usuário</th>
-                    <th>Equipe</th>
-                    <th>Ativo</th>
-                    <th></th>
+                    <td colspan="6" style="text-align: center; padding: 20px; font-style: italic; color: #999;">Nenhum usuário encontrado.</td>
                 </tr>
-            </thead>
-
-            <tbody>
-                @if (UsersList?.Any() == false)
+            }
+            else
+            {
+                @foreach (var item in UsersList)
                 {
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 20px; font-style: italic; color: #999;">Nenhum usuário encontrado.</td>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.User</td>
+                        <td>@item.TeamName</td>
+                        <td>@item.IsActive</td>
+                        <td class="td-button-edit">
+                            <button class="button edit" @onclick="() => OnEditUser(item.Id)">Editar</button>
+                            <button class="button delete" @onclick="() => OnDeleteUser(item.Id)">Excluir</button>
+                        </td>
                     </tr>
                 }
-                else
-                {
-                    @foreach (var item in UsersList)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Name</td>
-                            <td>@item.User</td>
-                            <td>@item.Team</td>
-                            <td>@item.IsActive</td>
-                            <td class="td-button-edit">
-                                <button class="button edit" @onclick="() => OnEditUser(item.Id)">Editar</button>
-                                <button class="button delete" @onclick="() => OnDeleteUser(item.Id)">Excluir</button>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+            }
+        </tbody>
+    </table>
+</div>
+
 
 
 @code {

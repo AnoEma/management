@@ -141,6 +141,7 @@
 .card {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
 }
 
 .card-title {
@@ -156,8 +157,13 @@
     font-weight: bold;
     background-color: #f8f9fa;
     text-align: center;
+    border-bottom: 2px solid #dee2e6;
 }
 
 .mb-4 {
     margin-bottom: 1.5rem !important;
+}
+
+.card:hover {
+    transform: scale(1.02);
 }

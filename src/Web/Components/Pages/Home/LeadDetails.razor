@@ -1,4 +1,5 @@
 ﻿@page "/lead/detalhes/{LeadId:int}"
+
 @using CSharpFunctionalExtensions
 @using Web.Model
 @using Web.Services.Interfaces
@@ -9,17 +10,31 @@
     {
         <div class="lead-card">
             <div class="lead-info">
-                <img src="/images/person/media-homem.jpeg" alt="@LeadDetail.Name" class="profile-image" />
                 <div class="personal-info">
+                    <img src="/images/person/media-homem.jpeg" alt="@LeadDetail.Name" class="profile-image" />
                     <p><strong>Nome:</strong> @LeadDetail.Name</p>
                     <p><strong>Email:</strong> @LeadDetail.Email</p>
                     <p><strong>Telefone:</strong> @LeadDetail.Phone</p>
                     <p><strong>Data de Nascimento:</strong> @LeadDetail.BirthDate</p>
                     <p><strong>Genero:</strong> @LeadDetail.Gender</p>
+                    <div class="vehicle-info">
+                        <h5>Informações do Veículo</h5>
+                        <p><strong>Modelo:</strong> @LeadDetail.Vehicle.Model</p>
+                        <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
+                        <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
+                    </div>
+                    <div class="address-info">
+                        <h5>Informações da residencia</h5>
+                        <p><strong>Rua:</strong> @LeadDetail.Address.Street</p>
+                        <p><strong>Bairro:</strong> @LeadDetail.Address.Neighborhood</p>
+                        <p><strong>Numéro:</strong> @LeadDetail.Address.Number</p>
+                        <p><strong>Estado:</strong> @LeadDetail.Address.State</p>
+                        <p><strong>Cep:</strong> @LeadDetail.Address.ZipCode</p>
+                    </div>
                 </div>
+                
             </div>
         </div>
-
 
         <div class="vehicle-info">
             <h3>Informações do Veículo</h3>
@@ -27,6 +42,8 @@
             <p><strong>Placa:</strong> @LeadDetail.Vehicle.Plate</p>
             <p><strong>Ano:</strong> @LeadDetail.Vehicle.Year</p>
         </div>
+        <div class="address-info"></div>
+        <div class="address-info"></div>
 
         <div class="address-info">
             <h3>Informações da residencia</h3>

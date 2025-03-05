@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(InfrastructureDbContext))]
-    [Migration("20250212224324_CreateIdentitySchema1")]
-    partial class CreateIdentitySchema1
+    [Migration("20250304190140_CreateIdentitySchema")]
+    partial class CreateIdentitySchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.12")
+                .HasAnnotation("ProductVersion", "8.0.13")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -121,8 +121,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Cpf")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Marital")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -149,8 +152,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -213,8 +216,11 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Cpf")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Marital")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -267,12 +273,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("GuidSolicitation")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("QuotationId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("QuotationToken")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
@@ -320,8 +320,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Chassi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IsNew")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsNew")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");

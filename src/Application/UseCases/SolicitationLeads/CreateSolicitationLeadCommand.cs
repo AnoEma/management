@@ -16,9 +16,10 @@ string Name,
 int PersonType,
 string Cpf,
 string BirthDate,
-string Gender,
+int Gender,
 string Email,
-string PhoneNumber
+string PhoneNumber,
+int Marital
 );
 
 
@@ -26,8 +27,9 @@ public record Driver
 (
 string Cpf,
 string Name,
-string Gender,
-string BirthDate
+int Gender,
+string BirthDate,
+int Marital
 );
 
 public record Vehicle
@@ -35,7 +37,7 @@ public record Vehicle
 string Brand,
 string ModelYear,
 string Model,
-string IsNew,
+bool IsNew,
 string Usage,
 string OvernightZipCode,
 string ResidentialZipCode,
@@ -45,11 +47,11 @@ string Chassi
 
 public record Address
 (
-string Street,
-string Number,
-string Neighborhood,
-string City,
-string State,
-string ZipCode,
+string? Street,
+string? Number,
+string? Neighborhood,
+string? City,
+string? State,
+string? ZipCode,
 string? Complement
 );

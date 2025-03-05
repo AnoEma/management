@@ -1,5 +1,4 @@
 ﻿using Application.UseCases.SolicitationLeads;
-using Microsoft.AspNetCore.Builder;
 
 namespace Api.Models.Request;
 
@@ -16,16 +15,16 @@ internal static class QuotationRequestToCommandAdapter
         );
     }
 
-    private static Address GetAddress(Endereco endereco)
+    private static Address GetAddress(Endereco? endereco)
     {
         return new(
-            Street: endereco.Rua,
-            Number: endereco.Numero,
-            Neighborhood: endereco.Bairro,
-            City: endereco.Cidade,
-            State: endereco.Estado,
-            ZipCode: endereco.CEP,
-            Complement: endereco.Complemento
+            Street: endereco?.Rua,
+            Number: endereco?.Numero,
+            Neighborhood: endereco?.Bairro,
+            City: endereco?.Cidade,
+            State: endereco?.Estado,
+            ZipCode: endereco?.CEP,
+            Complement: endereco?.Complemento
         );
     }
 
@@ -50,7 +49,8 @@ internal static class QuotationRequestToCommandAdapter
             Cpf: condutor.Cpf,
             Name: condutor.NomeCompleto,
             Gender: condutor.Genero,
-            BirthDate: condutor.DataNascimento
+            BirthDate: condutor.DataNascimento,
+            Marital: condutor.EstadoCivil
         );
     }
 
@@ -63,7 +63,8 @@ internal static class QuotationRequestToCommandAdapter
             BirthDate: segurado.DataNascimento,
             Gender: segurado.Genero,
             Email: segurado.Email,
-            PhoneNumber: segurado.Telefone
+            PhoneNumber: segurado.Telefone,
+            Marital: segurado.EstadoCivil
         );
     }
 }

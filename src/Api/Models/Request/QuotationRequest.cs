@@ -15,24 +15,26 @@ string NomeCompleto,
 int TipoPessoa,
 string Cpf,
 string DataNascimento,
-string Genero,
+int Genero,
 string Email,
-string Telefone
+string Telefone,
+int EstadoCivil
 );
 
 internal record Condutor
 (
 string Cpf,
 string NomeCompleto,
-string Genero,
-string DataNascimento
+int Genero,
+string DataNascimento,
+int EstadoCivil
 );
 
 internal record Veiculo
 (
 string Marca,
 string AnoModelo,
-string ZeroKm,
+bool ZeroKm,
 string Modelo,
 string Placa,
 string Utilizacao,

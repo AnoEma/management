@@ -1,11 +1,19 @@
-﻿namespace Application.Model;
+﻿using System.ComponentModel;
+
+namespace Application.Model;
 
 public enum OpportuniteStatus: byte
 {
-    Pending = 1,
-    Attended = 2,
+    [Description("Não iniciado")]
+    NotStarted = 1,
+    [Description("Pendente")]
+    Pending = 2,
+    [Description("Vendido")]
     Sold = 3,
+    [Description("Emitido")]
     Issued = 4,
-    Canceled = 0,
-    NotSold = 5
+    [Description("Cancelado")]
+    Canceled = 5,
+    [Description("Não vendido")]
+    NotSold = 6
 }

@@ -1,7 +1,4 @@
 ﻿using Infrastructure.Repository.Leads.Commands;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.IO;
-using System.Reflection.Emit;
 
 namespace Application.Model;
 
@@ -94,7 +91,7 @@ public record InsuredLead(
     string Name,
     string Cpf,
     string BirthDate,
-    string Gender,
+    int Gender,
     string PhoneNumber,
     string Email
 );

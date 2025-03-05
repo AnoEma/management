@@ -180,17 +180,20 @@
     #region Events Select
     void OnSelectTeam(ChangeEventArgs e)
     {
-        Model.Team = int.Parse(e.Value.ToString());
+        var team = Team.GetByValue(e.Value.ToString());
+        Model.Team = (int)team.Value;
     }
 
     void OnSelectGender(ChangeEventArgs e)
     {
-        Model.Gender = int.Parse(e.Value.ToString());
+        var gender = Gender.GetByValue(e.Value.ToString());
+        Model.Gender = (int)gender.Value;
     }
 
     void OnSelectProfileAccess(ChangeEventArgs e)
     {
-        Model.ProfileAccess = int.Parse(e.Value.ToString());
+        var profile = ProfileAccess.GetByValue(e.Value.ToString());
+        Model.ProfileAccess = (int)profile.Value;
     }
     #endregion
 

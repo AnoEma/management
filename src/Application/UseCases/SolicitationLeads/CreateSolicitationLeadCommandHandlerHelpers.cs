@@ -9,7 +9,6 @@ internal static class CreateSolicitationLeadCommandHandlerHelpers
         return new SolicitationLead
         {
             GuidSolicitation = Guid.NewGuid(),
-            QuotationId = Guid.NewGuid().ToString(),
             Owner = new Infrastructure.Repository.Leads.Commands.Owner
             {
                 BirthDate = command.Insured.BirthDate,
@@ -17,6 +16,7 @@ internal static class CreateSolicitationLeadCommandHandlerHelpers
                 Cpf = command.Insured.Cpf,
                 Gender = command.Insured.Gender,
                 PersonType = command.Insured.PersonType,
+                Marital = command.Insured.Marital
             },
             Vehicle = new Infrastructure.Repository.Leads.Commands.Vehicle
             {
@@ -35,7 +35,8 @@ internal static class CreateSolicitationLeadCommandHandlerHelpers
                 Name = command.Driver.Name,
                 BirthDate = command.Driver.BirthDate,
                 Cpf = command.Driver.Cpf,
-                Gender = command.Driver.Gender
+                Gender = command.Driver.Gender,
+                Marital = command.Driver.Marital
             },
             OpportuniteLead = new OpportuniteLead
             {
@@ -55,7 +56,6 @@ internal static class CreateSolicitationLeadCommandHandlerHelpers
             },
             CreatedAt = DateTime.Now,
             Status = (byte)SolicitationStatus.Pending,
-            QuotationToken = Guid.NewGuid().ToString(),
             Address = new Infrastructure.Repository.Leads.Commands.Address
             {
                 City = command.Address.City,

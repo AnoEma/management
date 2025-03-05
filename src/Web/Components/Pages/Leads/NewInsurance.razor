@@ -1,99 +1,48 @@
-﻿@page "/"
+﻿@page "/inicial"
+@using Application.Model
+@using Web.Extensions
 @using Web.Model
 @inject NavigationManager Navigation
 @using Web.Services.Interfaces
 @rendermode InteractiveServer
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listas dos Leads</title>
-    <style>
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
-        }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+<h1>Listas dos Leads</h1>
+<div class="row">
+    @foreach (var lead in Leads)
+    {
+        var buttonClass = lead.Status == 1
+        ? "status-pendente"
+        : lead.Status == 2
+        ? "status-nao-vendido"
+        : "status-outro";
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
+        <div class="col-md-3">
+            <div class="card text-bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Nome completo: </strong>@lead.FullName</h5>
+                    <p class="card-text"><strong>CPF: </strong>@lead.DocumentCpf</p>
+                    <p class="card-text"><strong>Placa: </strong>@lead.Vehicle.Plate</p>
+                    <p class="card-text"><strong>Modelo: </strong>@lead.Vehicle.Model</p>
+                    <p class="card-text"><strong>Ano Modelo: </strong>@lead.Vehicle.ModelYear</p>
+                    <p class="card-text"><strong>Tipo de Lead: </strong>@GetDescriptionOpportuniteType(lead.InsuranceType)</p>
+                    <div class="td-button-edit">
+                        <p class="card-text"><strong>Status: </strong> <span class="badge bg-success">@GetDescriptionOpportuniteStatus(lead.Status)</span></p>
+                    </div>
+                    <div class="td-button-action">
+                        <button class="button edit" @onclick="() => handleClick(lead.Id)">
+                            <p class="card-text"><strong>Abrir  </strong></p>
+                        </button>
+                        <button class="button edit action">
+                            <p class="card-text"><strong>Atender </strong></p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-        tr {
-            transition: background-color 0.3s;
-        }
-
-            tr.clickable:hover {
-                background-color: #f0f0f0;
-                cursor: pointer;
-            }
-
-        .status-pendente {
-            color: orange;
-        }
-
-        .status-nao-vendido {
-            color: red;
-        }
-
-        .status-outro {
-            color: green;
-        }
-    </style>
-</head>
-<body>
-    <h1>Listas dos Leads</h1>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome Cliente</th>
-                    <th>Placa</th>
-                    <th>Modelo Veículo</th>
-                    <th>Ano Modelo</th>
-                    <th>Tipo de Lead</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Leads?.Any() == false)
-                {
-                    <tr>
-                        <td colspan="6" style="text-align: center; padding: 20px; font-style: italic; color: #999;">Nenhum lead encontrado.</td>
-                    </tr>
-                }
-
-                @foreach (var lead in Leads)
-                {
-                    var buttonClass = lead.Status == 1
-                    ? "status-pendente"
-                    : lead.Status == 2
-                    ? "status-nao-vendido"
-                    : "status-outro";
-
-                    <tr @onclick="() => handleClick(lead.Id)" style="cursor: pointer;">
-                        <td>@lead.FullName</td>
-                        <td>@lead.Vehicle.Plate</td>
-                        <td>@lead.Vehicle.Model</td>
-                        <td>@lead.Vehicle.ModelYear</td>
-                        <td>@lead.InsuranceType</td>
-                        <td class="@buttonClass">@lead.Status</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
 
 
 
@@ -117,8 +66,20 @@
         Leads = result.Value;
     }
 
-    void handleClick(int leadId)
+    private void handleClick(int leadId)
     {
-        Navigation.NavigateTo($"/lead/detalhes/{leadId}", forceLoad: true);
+        Navigation.NavigateTo($"lead/detalhes/{leadId}", forceLoad: true);
+    }
+
+    private string GetDescriptionOpportuniteType(int insuranceType)
+    {
+        OpportuniteType type = (OpportuniteType)insuranceType;
+        return EnumExtensions.GetDescription(type);
+    }
+
+    private string GetDescriptionOpportuniteStatus(int status)
+    {
+        OpportuniteStatus type = (OpportuniteStatus)status;
+        return EnumExtensions.GetDescription(type);
     }
 }

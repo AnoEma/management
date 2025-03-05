@@ -7,7 +7,7 @@ public record GetAllUserModel
     int Id,
     string Name,
     string User,
-    int Team,
+    string TeamName,
     string IsActive
 )
 {
@@ -21,7 +21,7 @@ public record GetAllUserModel
                Id: user.Id,
                Name: $"{user.FirstName} {user.LastName}",
                User: user.Username,
-               Team: user.TeamName,
+               TeamName: GetDescriptionTeam(user.TeamName),
                IsActive: ConvertBooleanToStringPr(user.IsActive)
            ));
         }
@@ -31,5 +31,10 @@ public record GetAllUserModel
     private static string ConvertBooleanToStringPr(bool isActive)
     {
         return isActive ? "Sim" : "Não";
+    }
+
+    private static string GetDescriptionTeam(int team)
+    {
+        return Team.GetByDescription(team);
     }
 }

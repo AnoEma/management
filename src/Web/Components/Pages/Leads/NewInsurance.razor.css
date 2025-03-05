@@ -1,48 +1,4 @@
-﻿/*h1 {
-    text-align: center;
-}
-
-h1.title {
-        font-size: 2.5em;
-        color: #007bff;
-        text-align: center;
-        margin-bottom: 20px;
-}
-tr {
-    font-size: 1.5em;
-    color: #083610;
-    text-align: center;
-    margin-bottom: 10px;
-    font-family: monospace;
-}
-
-.status-button {
-    padding: 8px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    min-width: 80px;
-    color: #fff;
-    border: none;
-}
-
-.status-pendente {
-    background-color: #ffb400;
-}
-
-.status-nao-vendido {
-    background-color: #ff5252;
-}
-
-.status-outro {
-    background-color: #9e9e9e;
-}
-
-
-*/
-
-body {
+﻿body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
@@ -113,5 +69,63 @@ tr:hover {
 
     h1 {
         font-size: 18px;
+    }
+    .td-button-action {
+        margin-left: 193px;
+    }
+}
+
+.button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    text-transform: capitalize;
+    transition: background-color 0.3s ease;
+}
+
+.edit {
+    background-color: #4caf50;
+}
+
+    .edit:hover {
+        background-color: #388e3c;
+    }
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+tr {
+    transition: background-color 0.3s;
+}
+
+    tr.clickable:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+@media (min-width : 769px) {
+    .td-button-action {
+        margin-left: 332px;
+    }
+
+    .action {
+        margin-left: 24px;
     }
 }

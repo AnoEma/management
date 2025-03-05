@@ -7,7 +7,7 @@ public class Insured
     public int PersonType { get; set; }
     public string Cpf { get; set; }
     public string BirthDate { get; set; }
-    public string Gender { get; set; }
+    public int Gender { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
 }

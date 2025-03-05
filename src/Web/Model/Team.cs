@@ -1,4 +1,6 @@
-﻿namespace Web.Model;
+﻿using System.ComponentModel;
+
+namespace Web.Model;
 
 public record Team(int Value, string Text)
 {
@@ -10,4 +12,23 @@ public record Team(int Value, string Text)
         new(3, "São Paulo"),
         new(4, "Tulsa")
     ];
+    public static Team GetByValue(string value) =>
+    GetTeams.FirstOrDefault(option => option.Value.ToString() == value);
+
+    public static string GetByDescription(int value)
+    {
+        return GetTeams.FirstOrDefault(option => option.Value == value).Text;
+    }
 };
+
+public enum TypeTeam
+{
+    [Description("")]
+    None,
+    [Description("São Paulo")]
+    Matrix,
+    [Description("Las Vegas")]
+    Filial,
+    [Description("Tulsa")]
+    Tech
+}

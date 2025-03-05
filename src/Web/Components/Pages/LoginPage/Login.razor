@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@page "/"
 @rendermode InteractiveServer
 @* @inject SignInManager<ManagementUser> _signInManager *@
 @inject UserManager<ManagementUser> _userManager
@@ -13,6 +13,8 @@
 <PageTitle>Login</PageTitle>
 
 <div class="login-container">
+    <img src="/images/logo-potencial.png" />
+    <br/>
     <h2>Login</h2>
     <form method="post" @onsubmit="HandleLogin" @formname="user-logon">
         <div>
@@ -52,7 +54,7 @@
             if (userIdentity is null ||
             !await _userManager.CheckPasswordAsync(userIdentity, LoginModel.Password))
             {
-                Navigation.NavigateTo("/login", forceLoad: true);
+                Navigation.NavigateTo("/", forceLoad: true);
                 return;
             }
 
@@ -65,17 +67,17 @@
             //     Navigation.NavigateTo("/login", forceLoad: true);
             //     return;
             // }
-            Navigation.NavigateTo("/");
+            Navigation.NavigateTo("/inicial", forceLoad: true);
         }
         catch (Exception)
         {
-            Navigation.NavigateTo("/login", forceLoad: true);
+            Navigation.NavigateTo("/", forceLoad: true);
         }
     }
 
-    private async Task HandleLogout()
+    private void HandleLogout()
     {
         // await _signInManager.SignOutAsync();
-        Navigation.NavigateTo("/login", forceLoad: true);
+        Navigation.NavigateTo("/", forceLoad: true);
     }
 }

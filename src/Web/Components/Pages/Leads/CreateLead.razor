@@ -1,4 +1,6 @@
 ﻿@page "/criar-lead"
+@using Application.Model
+@using Web.Extensions
 @using Web.Model
 @using Web.Services.Interfaces
 @inject NavigationManager Navigation
@@ -8,34 +10,33 @@
 <div class="container">
     <h1>Criar o lead</h1>
     <form method="post" @onsubmit="Submit" @formname="user-create-lead">
-        <div class="container-field">
-            <div class="field-compound">
-                <div class="field">
+        <div class="mb-4 p-3 border rounded bg-light">
+            <h2>Dados de segurado(a)</h2>
+            <div class="row align-items-start">
+                <div class="col-md-6 mb-3">
                     <label for="name">Nome Completo</label>
                     <input type="text" id="name" name="name" placeholder="Nome" @bind-value="leadModel.Name">
                 </div>
-                <div class="field">
+                <div class="col-md-6 mb-3">
                     <label for="cpf">CPF</label>
                     <input type="text" id="cpf" name="cpf" placeholder="CPF" @onchange="@OnSaveDocument">
                 </div>
-            </div>
-            <div class="field-compound">
-                <div class="field">
+                <div class="col-md-6 mb-3">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" placeholder="Email de contato" @bind-value="leadModel.Email">
                 </div>
-                <div class="field">
+                <div class="col-md-6 mb-3">
                     <label for="phoneNumber">Telefone</label>
                     <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Telefone de contato" @bind-value="leadModel.PhoneNumber">
                 </div>
             </div>
 
-            <div class="field-compound">
-                <div class="field">
+            <div class="row align-items-start">
+                <div class="col-md-6 mb-3">
                     <label for="birthDate">Data Nascimento</label>
                     <input type="date" id="birthDate" name="birthDate" placeholder="Data Nascimento" @bind-value="leadModel.BirthDate">
                 </div>
-                <div class="field">
+                <div class="col-md-6 mb-3">
                     <label for="gender">Sexo</label>
                     <select class="form-select" @onchange="@OnSelectGender">
                         <option value="" disabled>-- Selecione o Sexo --</option>
@@ -45,25 +46,90 @@
                         }
                     </select>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label for="maritalStatus">Estado civil</label>
+                    <select class="form-select" @onchange="@OnSelectMaritalStatus">
+                        <option value="" disabled>-- Selecione o Sexo --</option>
+                        @foreach (var maritalStatus in MaritalStatuses)
+                        {
+                            <option value="@maritalStatus.Value">@maritalStatus.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="gender">Condutor é o mesmo do CPF?</label>
+                    <select class="form-select" @onchange="@OnSelectDriver">
+                        <option value="" disabled>-- Selecione --</option>
+                        @foreach (var decisionMaker in DecisionMakerModels)
+                        {
+                            <option value="@decisionMaker.Value">@decisionMaker.Text</option>
+                        }
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="container-field2">
-            <div class="field-compound">
-                <div class="field-plate">
+
+        @if (HasDriver == false)
+        {
+            <div class="mb-4 p-3 border rounded bg-light">
+                <h2>Dados de principal condutor(a)</h2>
+                <div class="row align-items-start">
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Nome Completo condutor(a)</label>
+                        <input type="text" id="name" name="name" placeholder="Nome" @bind-value="leadModel.Driver.Name">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="cpf">CPF condutor(a)</label>
+                        <input type="text" id="cpf" name="cpf" placeholder="CPF" @bind-value="leadModel.Driver.Cpf">
+                    </div>
+                </div>
+
+                <div class="row align-items-start">
+                    <div class="col-md-6 mb-3">
+                        <label for="birthDate">Data Nascimento condutor(a)</label>
+                        <input type="date" id="birthDate" name="birthDate" placeholder="Data Nascimento" @bind-value="leadModel.Driver.BirthDate">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="gender">Sexo</label>
+                        <select class="form-select" @onchange="@OnSelectGender">
+                            <option value="" disabled>-- Selecione o Sexo --</option>
+                            @foreach (var gender in Genders)
+                            {
+                                <option value="@gender.Value">@gender.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="maritalStatus">Estado civel</label>
+                        <select class="form-select" @onchange="@OnSelectMaritalStatus">
+                            <option value="" disabled>-- Selecione o Sexo --</option>
+                            @foreach (var maritalStatus in MaritalStatuses)
+                            {
+                                <option value="@maritalStatus.Value">@maritalStatus.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="mb-4 p-3 border rounded bg-light">
+            <h2>Dados de véiculo</h2>
+
+            <div class="row align-items-start">
+                <div class="col-md-6 mb-3">
                     <label for="plate">Placa</label>
                     <input type="text" id="plate" name="plate" placeholder="Placa do veículo" @onchange="@GetVehicle">
                 </div>
-                <div class="field">
+                <div class="col-md-6 mb-3">
                     <label for="model">Veículo</label>
                     <input type="text" id="model" name="model" placeholder="Modelo do veículo" @bind-value="VehicleDescription">
                 </div>
-            </div>
-            <div class="field-compound">
-                <div class="field">
-                    <label for="brand">Montador</label>
+                <div class="col-md-6 mb-3">
+                    <label for="brand">Fabricante</label>
                     <input type="text" id="brand" name="brand" placeholder="Montador" @bind-value="leadModel.VehicleModel.Brand">
                 </div>
-                <div class="field-ModelYear">
+                <div class="col-md-6 mb-3">
                     <label for="modelYear">Ano modelo</label>
                     <select class="form-select" @onchange="@OnSelectVehicleYearsModel">
                         <option value="" disabled>-- Selecione --</option>
@@ -73,7 +139,19 @@
                         }
                     </select>
                 </div>
-                <div class="field-IsNew">
+            </div>
+            <div class="row align-items-start">
+                <div class="col-md-6 mb-3">
+                    <label for="isNew">Utilização do veiculo</label>
+                    <select class="form-select" @onchange="@OnSelectVehicleUseModel">
+                        <option value="" disabled>-- Selecione --</option>
+                        @foreach (var vehicleUso in VehicleUsoModels)
+                        {
+                            <option value="@vehicleUso.Value">@vehicleUso.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
                     <label for="isNew">Veiculo Zero Km</label>
                     <select class="form-select" @onchange="@OnSelectDecisionMakerModel">
                         <option value="" disabled>-- Selecione --</option>
@@ -83,24 +161,41 @@
                         }
                     </select>
                 </div>
+                <div class="col-md-6 mb-3"></div>
+                <div class="col-md-6 mb-3"></div>
             </div>
-            <div class="field-compound">
-                <div class="field-ZipCode">
+        </div>
+        <div class="mb-4 p-3 border rounded bg-light">
+            <h2>Dados de Residencia</h2>
+            <div class="row align-items-start">
+                <div class="col-md-6 mb-3">
                     <label for="zipCode">Cep</label>
                     <input type="text" id="zipCode" @onchange="@GetAddress" name="zipCode" placeholder="Cep residencial">
                 </div>
-                <div class="field">
-                    <label for="address-description">Endereço</label>
-                    <input type="text" id="address-description" name="address-description" @bind-value="AddressDescription">
-                </div>
-                <div class="field">
+                <div class="col-md-6 mb-3">
                     <label for="address-number">Numero</label>
                     <input type="text" id="address-number" name="address-number" placeholder="numero da residencial" @bind-value="leadModel.AddressModel.Number">
                 </div>
-
-                <div class="field">
+                <div class="col-md-6 mb-3">
+                    <label for="isNew">Tipo de residencial</label>
+                    <select class="form-select" @onchange="@OnSelectTypeResidentialModel">
+                        <option value="" disabled>-- Selecione --</option>
+                        @foreach (var typeResidential in TypeResidentialModels)
+                        {
+                            <option value="@typeResidential.Value">@typeResidential.Text</option>
+                        }
+                    </select>
                 </div>
-                <div class="field">
+                <div class="col-md-6 mb-3">
+                </div>
+            </div>
+        </div>
+        <div class="mb-4 p-3 border rounded bg-light">
+            <div class="col-md-2 mb-3 text-center type-insurance-content">
+                <label>Tipo de seguro contrando</label>
+                <div class="type-insurance-button d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-primary type-insurance me-3" @onclick="@IsNewInsurance">Seguro Novo</button>
+                    <button type="button" class="btn btn-outline-secondary type-insurance" @onclick="@ReNewInsurance">Renovação</button>
                 </div>
             </div>
         </div>
@@ -112,11 +207,15 @@
     private IReadOnlyList<Gender> Genders = Gender.GetGenders;
     private IReadOnlyList<DecisionMakerModel> DecisionMakerModels = DecisionMakerModel.GetDecisionMakerModels;
     private IReadOnlyList<VehicleYearsModel> VehicleYearsModels = VehicleYearsModel.GetVehicleYears;
+    private IReadOnlyList<TypeResidentialModel> TypeResidentialModels = TypeResidentialModel.GetTypeResidentialModels;
+    private IReadOnlyList<VehicleUsoModel> VehicleUsoModels = VehicleUsoModel.GetVehicleUsoModels;
+    private IReadOnlyList<MaritalStatus> MaritalStatuses = MaritalStatus.GetMaritalStatuses;
 
     [SupplyParameterFromForm]
     private CreateLeadModel leadModel { get; set; }
     private string VehicleDescription { get; set; }
     private string AddressDescription { get; set; }
+    private bool HasDriver { get; set; }
 
     [Inject]
     private ILeadsService _leadsService { get; set; }
@@ -142,12 +241,30 @@
 
     void OnSelectGender(ChangeEventArgs e)
     {
-        leadModel.Gender = int.Parse(e.Value.ToString());
+        var gender = Gender.GetByValue(e.Value.ToString());
+        if (HasDriver)
+        {
+            leadModel.Driver.Gender = (int)gender.Value;
+            return;
+        }
+        leadModel.Gender = (int)gender.Value;
     }
 
     void OnSelectDecisionMakerModel(ChangeEventArgs e)
     {
-        leadModel.VehicleModel.IsNew = bool.TryParse(e.Value.ToString(), out bool decisionMaker);
+        leadModel.VehicleModel.IsNew = bool.Parse(e.Value.ToString());
+    }
+
+    void OnSelectTypeResidentialModel(ChangeEventArgs e)
+    {
+        var residentialType = TypeResidentialModel.GetByValue(e.Value.ToString());
+        leadModel.AddressModel.TypeResidential = (int)residentialType.Value;
+    }
+
+    void OnSelectVehicleUseModel(ChangeEventArgs e)
+    {
+        var useModel = VehicleUsoModel.GetByValue(e.Value.ToString());
+        leadModel.VehicleModel.Usage = (int)useModel.Value;
     }
 
     void OnSelectVehicleYearsModel(ChangeEventArgs e)
@@ -166,6 +283,32 @@
 
         leadModel.PersonType = document.Length > 11 ? 2 : 1;
         leadModel.DocumentCpf = document;
+    }
+
+    void OnSelectMaritalStatus(ChangeEventArgs e)
+    {
+        var maritalStatus = MaritalStatus.GetByValue(e.Value.ToString());
+        if (HasDriver)
+        {
+            leadModel.Driver.Marital = (int)maritalStatus.Value;
+            return;
+        }
+        leadModel.Marital = (int)maritalStatus.Value;
+    }
+
+    void OnSelectDriver(ChangeEventArgs e)
+    {
+        HasDriver = bool.Parse(e.Value.ToString());
+    }
+
+    void IsNewInsurance()
+    {
+        leadModel.InsuranceType = (int)OpportuniteType.NewInsurance;
+    }
+
+    void ReNewInsurance()
+    {
+        leadModel.InsuranceType = (int)OpportuniteType.Renewal;
     }
 
     async void GetVehicle(ChangeEventArgs e)
@@ -222,6 +365,6 @@
 
     void ReloadPage()
     {
-        Navigation.NavigateTo("/", forceLoad: true);
+        Navigation.NavigateTo("/inicial", forceLoad: true);
     }
 }

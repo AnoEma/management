@@ -1,22 +1,22 @@
 ﻿namespace Web.Model;
 
-public record ProfileAccess(int Value, string Text)
+public record ProfileAccess(AccessLevel Value, string Text)
 {
     public static IReadOnlyList<ProfileAccess> GetProfileAccess { get; } =
     [
-        new(6, ""),
-        new(1, "Administrador"),
-        new(2, "Gerente"),
-        new(3, "Supervisore"),
-        new(4, "Lider"),
-        new(5, "Consultor")
+        new(AccessLevel.None, ""),
+        new(AccessLevel.Admin, "Administrador"),
+        new(AccessLevel.Manager, "Gerente"),
+        new(AccessLevel.Supervisor, "Supervisore"),
+        new(AccessLevel.Leader, "Lider"),
+        new(AccessLevel.Consultant, "Consultor")
     ];
 
     public static ProfileAccess GetByValue(string value) =>
         GetProfileAccess.FirstOrDefault(option => option.Value.ToString() == value);
 }
 
-public enum AccessLevel: int
+public enum AccessLevel: byte
 {
     Admin = 1,
     Manager,

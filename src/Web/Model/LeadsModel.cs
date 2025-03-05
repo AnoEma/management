@@ -10,8 +10,9 @@ public class LeadsModel
     public int Status { get; set; }
     public string Email { get; set; }
     public string Phone { get; set; }
-    public string Gender { get; set; }
+    public int Gender { get; set; }
     public string BirthDate { get; set; }
+    public string DocumentCpf { get; set; }
 
     public VehicleDetails Vehicle { get; set; }
     public AddressDetails Address { get; set; }
@@ -26,6 +27,7 @@ public class LeadsModel
             {
                 Id = item.Id,
                 FullName = item.Opportunite.Insured.Name,
+                DocumentCpf = item.Opportunite.Insured.Cpf,
                 InsuranceType = item.Opportunite.Type,
                 Status = item.Opportunite.Status,
                 Vehicle = new VehicleDetails()
